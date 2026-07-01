@@ -1,227 +1,406 @@
 <!doctype html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PHA 351 Online Review Quiz</title>
-  <style>
-    :root {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --ink: #1f2937;
-      --muted: #6b7280;
-      --primary: #7c3aed;
-      --primary-dark: #5b21b6;
-      --accent: #f97316;
-      --good: #047857;
-      --bad: #b91c1c;
-      --line: #e5e7eb;
-      --soft: #ede9fe;
-      --warn: #fff7ed;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", "Tahoma", sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.55;
-    }
-    header {
-      background: linear-gradient(135deg, var(--primary), #a855f7);
-      color: white;
-      padding: 28px 18px;
-    }
-    .wrap { max-width: 1050px; margin: 0 auto; padding: 0 16px; }
-    h1 { margin: 0 0 8px; font-size: clamp(1.4rem, 3vw, 2.2rem); }
-    h2 { margin: 0 0 14px; }
-    .subtitle { margin: 0; opacity: .92; }
-    main { padding: 24px 0 48px; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(31, 41, 55, .06);
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 12px;
-    }
-    .quiz-btn, button {
-      border: 0;
-      border-radius: 14px;
-      padding: 12px 14px;
-      background: var(--primary);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      transition: .15s transform, .15s background, .15s opacity;
-      font-size: 1rem;
-    }
-    button:hover, .quiz-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
-    button.secondary { background: #374151; }
-    button.ghost { background: #f3f4f6; color: var(--ink); border: 1px solid var(--line); }
-    button.ghost:hover { background: #e5e7eb; }
-    button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-    .quiz-tile {
-      text-align: left;
-      background: white;
-      color: var(--ink);
-      border: 1px solid var(--line);
-      box-shadow: none;
-    }
-    .quiz-tile:hover { background: var(--soft); color: var(--primary-dark); }
-    .small { color: var(--muted); font-size: .92rem; }
-    .pill {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: var(--soft);
-      color: var(--primary-dark);
-      font-weight: 700;
-      font-size: .82rem;
-      margin-right: 6px;
-    }
-    .progressbar {
-      height: 10px; background: #e5e7eb; border-radius: 999px; overflow: hidden; margin: 12px 0 6px;
-    }
-    .progressbar > div { height: 100%; background: var(--accent); width: 0%; transition: width .2s; }
-    .qbox { font-size: 1.08rem; font-weight: 700; margin: 12px 0 14px; }
-    .option {
-      display: flex; align-items: flex-start; gap: 10px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      margin: 8px 0;
-      background: #fff;
-      cursor: pointer;
-    }
-    .option:hover { border-color: #c4b5fd; background: #faf5ff; }
-    .option input { margin-top: 5px; }
-    .option.correct { border-color: #34d399; background: #ecfdf5; }
-    .option.wrong { border-color: #fca5a5; background: #fef2f2; }
-    .feedback {
-      margin-top: 14px;
-      border-radius: 14px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      background: #f9fafb;
-    }
-    .feedback.good { background: #ecfdf5; border-color: #34d399; }
-    .feedback.bad { background: #fef2f2; border-color: #fca5a5; }
-    .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-    .score {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-    }
-    .review-item {
-      border-left: 4px solid var(--line);
-      padding: 10px 12px;
-      background: #fff;
-      margin: 10px 0;
-      border-radius: 10px;
-    }
-    .review-item.good { border-left-color: #34d399; }
-    .review-item.bad { border-left-color: #f87171; }
-    .hidden { display: none !important; }
-    .note {
-      background: var(--warn);
-      border: 1px solid #fed7aa;
-      border-radius: 14px;
-      padding: 12px 14px;
-    }
-    footer { color: var(--muted); padding: 10px 0 20px; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHA 351 CNS Review Quiz</title>
+<style>
+:root {
+  --bg:#eef2ff;
+  --bg2:#f8fafc;
+  --card:rgba(255,255,255,.92);
+  --ink:#0f172a;
+  --muted:#64748b;
+  --primary:#4f46e5;
+  --primary-dark:#3730a3;
+  --accent:#f97316;
+  --accent2:#06b6d4;
+  --good:#059669;
+  --bad:#dc2626;
+  --line:#e2e8f0;
+  --soft:#eef2ff;
+  --soft2:#f1f5f9;
+  --warn:#fff7ed;
+  --shadow:0 20px 55px rgba(15,23,42,.12);
+  --shadow2:0 10px 28px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(79,70,229,.22), transparent 34rem),
+    radial-gradient(circle at 92% 12%, rgba(249,115,22,.20), transparent 30rem),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--ink);
+  line-height:1.6;
+  min-height:100vh;
+}
+header{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#312e81 0%,#4f46e5 52%,#06b6d4 100%);
+  color:#fff;
+  padding:42px 18px 34px;
+  box-shadow:0 18px 45px rgba(49,46,129,.26);
+}
+header:before,header:after{
+  content:"";
+  position:absolute;
+  border-radius:999px;
+  filter:blur(.5px);
+  opacity:.22;
+  background:#fff;
+}
+header:before{width:280px;height:280px;right:-80px;top:-110px}
+header:after{width:160px;height:160px;left:10%;bottom:-90px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px;position:relative}
+h1{margin:0 0 10px;font-size:clamp(1.7rem,3.4vw,2.7rem);letter-spacing:-.03em;line-height:1.15}
+h2{margin:0 0 10px;font-size:clamp(1.28rem,2.3vw,1.75rem);letter-spacing:-.02em}
+h3{margin:16px 0 8px}
+p{margin:8px 0}
+main{padding:26px 0 46px}
+.card{
+  background:var(--card);
+  border:1px solid rgba(226,232,240,.88);
+  border-radius:28px;
+  padding:22px;
+  box-shadow:var(--shadow2);
+  margin:18px 0;
+  backdrop-filter:blur(12px);
+}
+.card.hero{
+  padding:26px;
+  background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(238,242,255,.92));
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px}
+button,.btn{
+  border:0;
+  border-radius:18px;
+  padding:13px 16px;
+  background:linear-gradient(135deg,var(--primary),#7c3aed);
+  color:white;
+  cursor:pointer;
+  font-weight:800;
+  font-size:1rem;
+  box-shadow:0 12px 25px rgba(79,70,229,.23);
+  transition:transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+}
+button:hover{transform:translateY(-1px);box-shadow:0 18px 34px rgba(79,70,229,.27)}
+button.secondary{background:#fff;color:var(--primary);border:1px solid rgba(79,70,229,.32);box-shadow:none}
+button.secondary:hover{background:#eef2ff}
+button.soft{background:#eef2ff;color:var(--primary-dark);box-shadow:none}
+button.good{background:linear-gradient(135deg,#059669,#10b981)}
+button.bad{background:linear-gradient(135deg,#dc2626,#f97316)}
+button.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.quiz-card button{
+  width:100%;
+  min-height:116px;
+  text-align:left;
+  background:linear-gradient(180deg,#fff,#f8fafc);
+  color:var(--ink);
+  border:1px solid rgba(226,232,240,.95);
+  font-weight:800;
+  box-shadow:var(--shadow2);
+  position:relative;
+  overflow:hidden;
+}
+.quiz-card button:before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--primary),var(--accent2),var(--accent));
+}
+.quiz-card button:hover{border-color:rgba(79,70,229,.5);background:#fff;transform:translateY(-2px)}
+.small{font-size:.92rem;color:var(--muted);font-weight:500}
+.hidden{display:none!important}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  border-radius:999px;
+  padding:5px 12px;
+  background:#eef2ff;
+  color:#3730a3;
+  font-weight:800;
+  font-size:.86rem;
+  margin:4px 4px 4px 0;
+  border:1px solid rgba(79,70,229,.16);
+}
+.pill.orange{background:#ffedd5;color:#9a3412;border-color:#fed7aa}
+.pill.green{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+.pill.blue{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.pill.gray{background:#f1f5f9;color:#475569;border-color:#e2e8f0}
+.option{
+  display:block;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  margin:11px 0;
+  background:#fff;
+  cursor:pointer;
+  box-shadow:0 4px 13px rgba(15,23,42,.04);
+  transition:.16s ease;
+}
+.option:hover{border-color:var(--primary);background:#f8faff;transform:translateY(-1px)}
+.option.correct{border-color:#34d399;background:#ecfdf5}
+.option.wrong{border-color:#f87171;background:#fef2f2}
+.option input{margin-right:8px;transform:scale(1.05)}
+.feedback{
+  border-radius:20px;
+  padding:15px 16px;
+  margin-top:15px;
+  border:1px solid var(--line);
+  box-shadow:0 6px 18px rgba(15,23,42,.05);
+}
+.feedback.good{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+.feedback.bad{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+.progress{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin:15px 0;box-shadow:inset 0 1px 2px rgba(0,0,0,.05)}
+.progress > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent2),var(--accent));width:0%;transition:width .25s ease}
+.scorebox{font-size:1.35rem;font-weight:900}
+.review-item{border:1px solid var(--line);border-radius:18px;padding:14px;margin:11px 0;background:#fff;box-shadow:0 5px 15px rgba(15,23,42,.04)}
+.badge-shelf{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.badge{
+  border:1px solid #fde68a;
+  background:linear-gradient(135deg,#fffbeb,#fff7ed);
+  border-radius:18px;
+  padding:11px 13px;
+  color:#92400e;
+  font-weight:900;
+  box-shadow:0 10px 25px rgba(251,191,36,.16);
+}
+.badge .desc{display:block;font-weight:600;color:#78350f;font-size:.86rem;margin-top:3px}
+.badge-compact{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid #fde68a;
+  background:linear-gradient(135deg,#fffaf0,#ffffff);
+  color:#92400e;
+  border-radius:999px;
+  padding:9px 13px;
+  font-weight:900;
+  box-shadow:0 8px 20px rgba(251,191,36,.12);
+}
+.badge-summary{
+  margin-top:14px;
+  border:1px solid rgba(251,191,36,.45);
+  background:linear-gradient(135deg,rgba(255,251,235,.86),rgba(255,255,255,.92));
+  border-radius:20px;
+  padding:12px 14px;
+}
+.badge-summary .badge-count{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;
+  color:#92400e;
+  font-weight:900;
+}
+.badge-summary details{margin-top:7px}
+.badge-summary summary{
+  cursor:pointer;
+  color:#4f46e5;
+  font-weight:800;
+  list-style:none;
+}
+.badge-summary summary::-webkit-details-marker{display:none}
+.badge-shelf.mini{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:8px;
+  margin-top:9px;
+}
+.badge-shelf.mini .badge{
+  padding:9px 10px;
+  border-radius:14px;
+  box-shadow:none;
+  font-size:.95rem;
+}
+.badge-shelf.result-only{
+  padding-top:4px;
+}
+
+.match-row{
+  display:grid;
+  grid-template-columns:minmax(140px,1fr) minmax(220px,1.5fr);
+  gap:12px;align-items:center;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:13px;
+  margin:11px 0;
+  background:#fff;
+  box-shadow:0 5px 14px rgba(15,23,42,.04);
+}
+.match-row select{width:100%;padding:11px;border-radius:14px;border:1px solid var(--line);font-size:1rem;background:#fff}
+.match-row.correct{border-color:#34d399;background:#ecfdf5}
+.match-row.wrong{border-color:#f87171;background:#fff7f7}
+.receptor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.receptor-card{
+  min-height:78px;
+  background:linear-gradient(180deg,#fff,#eef2ff);
+  color:var(--primary-dark);
+  border:2px solid rgba(79,70,229,.15);
+  text-align:center;
+  font-size:1.1rem;
+  box-shadow:var(--shadow2);
+}
+.receptor-card:hover{background:#fff;border-color:var(--primary)}
+.casebox{
+  border-left:7px solid var(--accent);
+  background:linear-gradient(135deg,#fff7ed,#ffffff);
+  padding:15px;
+  border-radius:18px;
+  margin:14px 0;
+  box-shadow:0 5px 14px rgba(249,115,22,.08);
+}
+.two-step-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.reason-tag{font-size:.9rem;color:var(--muted);margin-top:6px}
+.footer-note{color:var(--muted);font-size:.9rem;text-align:center;margin-top:25px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 6px 16px rgba(15,23,42,.05)}
+.stat strong{display:block;font-size:1.15rem}
+@media(max-width:650px){
+  .match-row{grid-template-columns:1fr}
+  .card{padding:16px;border-radius:22px}
+  header{padding:34px 14px 28px}
+  .quiz-card button{min-height:102px}
+}
+</style>
 </head>
 <body>
 <header>
   <div class="wrap">
-    <h1>PHA 351 Online Review Quiz</h1>
-    <p class="subtitle">Antidepressant, Mood Stabilizers, Anxiolytic and Sedative-Hypnotic Drugs</p>
+    <h1>PHA 351 CNS Review Quiz</h1>
+    <p>Antidepressants, mood stabilizers, anxiolytics and sedative-hypnotic drugs</p>
+    <p class="small" style="color:#f5f3ff">Static single-file web app · ทำงานใน browser · ไม่บันทึกชื่อ คำตอบ หรือคะแนนกลับมาหาผู้สอน</p>
   </div>
 </header>
-
 <main class="wrap">
-  <section id="home" class="card">
-    <h2>เลือกชุดแบบฝึกหัด</h2>
-    <p class="small">แบบฝึกหัดนี้ออกแบบเพื่อทบทวนด้วยตนเอง แสดง feedback ทันที และสามารถทำซ้ำได้</p>
-    <div id="quizList" class="grid"></div>
-    <div class="note" style="margin-top:16px">
-      <strong>คำแนะนำ:</strong> ควรทำทีละชุดหลังเรียนแต่ละช่วง แล้วใช้ feedback เพื่อกลับไปทบทวนหัวข้อที่ยังผิด
+  <section id="home">
+    <div class="card hero">
+      <span class="pill green">Self-review · ทำซ้ำได้</span>
+      <span class="pill blue">Feedback ทันที</span>
+      <span class="pill orange">ไม่บันทึกข้อมูลผู้เรียน</span>
+      <h2>เลือกแบบฝึกหัดทบทวน</h2>
+      <p>แบบฝึกหัดออนไลน์สำหรับทบทวนกลไกยา ฤทธิ์ทางคลินิก และอาการไม่พึงประสงค์ของยาในหัวข้อ CNS pharmacology</p>
+      <p class="small">เลือกทำเป็นชุด แยกหัวข้อ หรือฝึกผ่านเกมสั้น ๆ ได้ คะแนนและ badge แสดงเฉพาะใน browser ระหว่างใช้งาน โดยหน้าแรกจะแสดงสรุป badge แบบย่อ</p>
+      <div id="badgeShelfHome" class="badge-shelf"></div>
+    </div>
+    <div class="card">
+      <h2>แบบฝึกหัดทั้งหมด</h2>
+      <p class="small">เลือกชุดที่ต้องการทบทวน ระบบจะแสดง feedback หลังตอบแต่ละข้อ และสรุปคะแนนพร้อม badge หลังจบชุด</p>
+      <div id="quizList" class="grid"></div>
     </div>
   </section>
 
-  <section id="quiz" class="card hidden">
+  <section id="quiz" class="hidden card">
     <div>
-      <span id="categoryPill" class="pill"></span>
-      <span id="difficultyPill" class="pill"></span>
-      <span id="typePill" class="pill"></span>
+      <span id="modeLabel" class="pill"></span>
+      <span id="counter" class="pill orange"></span>
+      <span id="difficulty" class="pill blue"></span>
     </div>
-    <div class="progressbar"><div id="progress"></div></div>
-    <p id="counter" class="small"></p>
-    <div id="question" class="qbox"></div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <h2 id="questionText"></h2>
+    <p id="typeHint" class="small"></p>
     <div id="options"></div>
+    <button id="submitBtn" onclick="submitAnswer()">ตรวจคำตอบ</button>
+    <button class="secondary" onclick="goHome()">กลับหน้าแรก</button>
     <div id="feedback" class="feedback hidden"></div>
-    <div class="controls">
-      <button id="submitBtn" onclick="submitAnswer()">ส่งคำตอบ</button>
-      <button id="nextBtn" class="secondary hidden" onclick="nextQuestion()">ข้อต่อไป</button>
-      <button class="ghost" onclick="goHome()">กลับหน้าแรก</button>
+    <div style="margin-top:12px">
+      <button id="nextBtn" class="good hidden" onclick="nextQuestion()">ข้อต่อไป</button>
     </div>
   </section>
 
-  <section id="result" class="card hidden">
-    <h2>สรุปผล</h2>
-    <p class="score" id="scoreText"></p>
-    <p id="scoreAdvice"></p>
-    <div class="controls">
-      <button onclick="restartQuiz()">ทำชุดนี้ซ้ำ</button>
-      <button class="secondary" onclick="goHome()">เลือกชุดอื่น</button>
-    </div>
-    <h3 style="margin-top:22px">ทบทวนคำตอบ</h3>
-    <div id="review"></div>
+  <section id="matching" class="hidden card">
+    <h2>🧩 Matching: Drug Class Challenge</h2>
+    <p class="small">เลือกกลุ่มยาที่ตรงกับยาแต่ละตัว ระบบจะสุ่ม 12 รายการต่อรอบ</p>
+    <div id="matchingRows"></div>
+    <button onclick="checkMatching()">ตรวจคำตอบ</button>
+    <button class="soft" onclick="startMatching()">สุ่มชุดใหม่</button>
+    <button class="secondary" onclick="goHome()">กลับหน้าแรก</button>
+    <div id="matchingFeedback" class="feedback hidden"></div>
   </section>
 
-  <footer>
-    <p>Static web app for formative review. No student data are sent to a server.</p>
-  </footer>
+  <section id="receptorGame" class="hidden card">
+    <h2>🧠 5-HT Receptor Subtype Game</h2>
+    <div>
+      <span id="recCounter" class="pill orange"></span>
+      <span class="pill">1A ใจสงบ · 2A sleep/sex/anxiety · 2C appetite/DA-NE · 3 GI</span>
+    </div>
+    <div class="progress"><div id="recProgress"></div></div>
+    <div class="casebox">
+      <h2 id="recPrompt"></h2>
+      <p id="recHint" class="small hidden"></p>
+    </div>
+    <div class="receptor-grid" id="recChoices"></div>
+    <button class="soft" onclick="showRecHint()">ขอ hint</button>
+    <button class="secondary" onclick="goHome()">กลับหน้าแรก</button>
+    <div id="recFeedback" class="feedback hidden"></div>
+    <button id="recNext" class="good hidden" onclick="nextReceptor()">ข้อต่อไป</button>
+  </section>
+
+  <section id="twoStep" class="hidden card">
+    <h2>🩺 Two-step Reasoning Quiz</h2>
+    <span id="twoCounter" class="pill orange"></span>
+    <div class="progress"><div id="twoProgress"></div></div>
+    <div class="casebox"><strong>Case:</strong> <span id="twoCase"></span></div>
+    <div class="two-step-grid">
+      <div>
+        <h3 id="twoStep1"></h3>
+        <div id="twoOptions1"></div>
+      </div>
+      <div>
+        <h3 id="twoStep2"></h3>
+        <p class="small">ขั้นที่ 2 ช่วยฝึกเหตุผล ไม่ใช่เดาคำตอบอย่างเดียว</p>
+        <div id="twoOptions2"></div>
+      </div>
+    </div>
+    <button onclick="submitTwoStep()">ตรวจคำตอบ</button>
+    <button class="secondary" onclick="goHome()">กลับหน้าแรก</button>
+    <div id="twoFeedback" class="feedback hidden"></div>
+    <button id="twoNext" class="good hidden" onclick="nextTwoStep()">ข้อต่อไป</button>
+  </section>
+
+  <section id="result" class="hidden card">
+    <h2>ผลลัพธ์</h2>
+    <div id="scoreText" class="scorebox"></div>
+    <div id="badgeShelfResult" class="badge-shelf"></div>
+    <p id="advice"></p>
+    <div>
+      <button onclick="restartLast()">ทำชุดนี้อีกครั้ง</button>
+      <button class="soft" onclick="reviewWrong()">ทบทวนเฉพาะข้อที่ผิด</button>
+      <button class="secondary" onclick="goHome()">กลับหน้าแรก</button>
+    </div>
+    <div id="review" style="margin-top:14px"></div>
+  </section>
+  <p class="footer-note">หมายเหตุ: ข้อมูลคะแนน/คำตอบอยู่เฉพาะใน browser ระหว่างใช้งาน ไม่ส่งกลับไปยังผู้สอนหรือฐานข้อมูล</p>
 </main>
-
 <script>
-const QUESTIONS = [{"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ภาวะ Depression หรือ Major depressive disorder ควรสัมพันธ์กับกลุ่มยาหลักใดมากที่สุด", "options": ["Hypnotic drugs", "Anxiolytic drugs", "Antidepressants", "Antimanic drugs"], "answer": ["Antidepressants"], "feedback": "Depression/MDD ใช้กลุ่ม antidepressants เป็นกลุ่มยาหลักสำหรับการรักษาภาวะซึมเศร้า."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "multi", "difficulty": "★", "question": "Bipolar disorder ในระยะ mania phase สัมพันธ์กับกลุ่มยาใด เลือกได้มากกว่า 1 ข้อ", "options": ["Hypnotic drugs", "Anxiolytic drugs", "Antidepressants", "Mood stabilizers", "Antimanic drugs"], "answer": ["Mood stabilizers", "Antimanic drugs"], "feedback": "Mania phase ใน bipolar disorder ใช้ mood stabilizers และ/หรือ antimanic drugs."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Anxiety disorders สัมพันธ์กับกลุ่มยาใดมากที่สุด", "options": ["Hypnotic drugs", "Anxiolytic drugs", "Antimanic drugs", "NMDA receptor antagonists"], "answer": ["Anxiolytic drugs"], "feedback": "Anxiety disorders ใช้ anxiolytic drugs เช่น SSRIs/SNRIs, benzodiazepines หรือ buspirone."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Insomnia สัมพันธ์กับกลุ่มยาใดมากที่สุด", "options": ["Hypnotic drugs", "Antidepressants เท่านั้น", "Mood stabilizers", "Antimanic drugs"], "answer": ["Hypnotic drugs"], "feedback": "Insomnia ใช้ hypnotic drugs เช่น benzodiazepines, Z-drugs, melatonin agents หรือ sedating antidepressants."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ในภาวะซึมเศร้า การทำงานของ serotonin (5-HT) มีแนวโน้มเปลี่ยนแปลงอย่างไร", "options": ["เพิ่มขึ้น", "ลดลง", "ไม่เกี่ยวข้อง", "เพิ่มขึ้นเฉพาะที่ peripheral tissue เท่านั้น"], "answer": ["ลดลง"], "feedback": "5-HT ลดลงสัมพันธ์กับการเพิ่มขึ้นของอารมณ์ทางลบ เช่น ความเศร้าและความวิตกกังวล."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Norepinephrine (NE) เกี่ยวข้องเด่นกับสิ่งใด", "options": ["พลังงาน สมาธิ BP และ HR", "คลื่นไส้เท่านั้น", "การแข็งตัวของเลือดเท่านั้น", "การสลาย tyramine เท่านั้น"], "answer": ["พลังงาน สมาธิ BP และ HR"], "feedback": "NE เกี่ยวข้องกับ energy/alert, concentration รวมถึงผลต่อ BP และ HR."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Dopamine (DA) ลดลงในภาวะซึมเศร้า ส่งผลเด่นต่ออาการใด", "options": ["ลด motivation และ pleasure", "เพิ่ม hypertensive crisis", "เพิ่ม complex sleep behavior", "เพิ่ม dry mouth"], "answer": ["ลด motivation และ pleasure"], "feedback": "DA เกี่ยวข้องกับ motivation, pleasure และ activation; เมื่อ DA ลดลงจึงเกิด reduced positive affect."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ข้อใดเป็นภาพจำของ GABA ที่เหมาะสมที่สุด", "options": ["Brake / ระบบยับยั้ง", "Accelerator / ระบบกระตุ้น", "Reward transmitter", "Tyramine metabolism"], "answer": ["Brake / ระบบยับยั้ง"], "feedback": "GABA เป็น inhibitory neurotransmitter เปรียบเหมือนเบรกของระบบประสาท ช่วยสงบ หลับ และกันชัก."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ข้อใดเป็นภาพจำของ glutamate ที่เหมาะสมที่สุด", "options": ["Accelerator / excitation", "Brake / inhibition", "ตัวรับสำหรับ sexual dysfunction โดยตรง", "เอนไซม์สลาย monoamine"], "answer": ["Accelerator / excitation"], "feedback": "Glutamate เป็น excitatory neurotransmitter เปรียบเหมือน accelerator ของระบบประสาท."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "สารสื่อประสาทใดสัมพันธ์กับ motivation, pleasure และ activation มากที่สุด", "options": ["Dopamine", "GABA", "Histamine H1", "Muscarinic receptor"], "answer": ["Dopamine"], "feedback": "Dopamine เกี่ยวข้องกับ drive/reward, motivation, pleasure และ activation."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "SERT inhibitor ทำให้สารใดเพิ่มขึ้นเป็นหลัก", "options": ["5-HT", "NE", "DA", "Tyramine"], "answer": ["5-HT"], "feedback": "SERT คือ serotonin transporter; การยับยั้ง SERT ทำให้ 5-HT ใน synaptic cleft เพิ่มขึ้น."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "NET inhibitor ทำให้เกิดผลใดได้", "options": ["เพิ่ม NE และอาจเพิ่ม DA ในสมองส่วนหน้า", "ลด GABA", "ยับยั้ง MAO โดยตรง", "ยับยั้ง H1 โดยตรง"], "answer": ["เพิ่ม NE และอาจเพิ่ม DA ในสมองส่วนหน้า"], "feedback": "NET inhibition เพิ่ม NE และที่ prefrontal cortex อาจเพิ่ม DA ทางอ้อม จึงช่วย energy/concentration แต่เสี่ยง BP/HR สูง."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "DAT inhibitor เด่นต่อผลทางคลินิกใด", "options": ["เพิ่ม motivation และ reward", "ลดคลื่นไส้ผ่าน 5-HT3", "ลด orthostatic hypotension", "ลด tyramine interaction"], "answer": ["เพิ่ม motivation และ reward"], "feedback": "DAT inhibition เพิ่ม DA โดยเฉพาะใน striatum/nucleus accumbens จึงช่วย motivation, reward และ energy."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "MAO inhibitor ต้องระวัง ADR/interaction ใดมากที่สุด", "options": ["Hypertensive crisis จาก tyramine", "Complex sleep behavior", "Dry mouth จาก M1 block เท่านั้น", "SJS/TEN"], "answer": ["Hypertensive crisis จาก tyramine"], "feedback": "MAOIs ยับยั้งการสลาย monoamines/tyramine อาจทำให้ NE สูงมากและเกิด hypertensive crisis."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "α2 receptor antagonist ทำให้เกิดผลใด", "options": ["เพิ่มการปล่อย NE และ 5-HT", "ลด SERT โดยตรงเท่านั้น", "เพิ่ม chloride duration", "ลด serotonin ทุกตำแหน่ง"], "answer": ["เพิ่มการปล่อย NE และ 5-HT"], "feedback": "α2 antagonism ลด presynaptic brake ของ noradrenergic/serotonergic neurons จึงเพิ่ม NE และ 5-HT."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "H1 receptor antagonist สัมพันธ์กับ ADR ใด", "options": ["Sedation และ weight gain", "Hypertensive crisis", "Sexual dysfunction จาก 5-HT2A", "Bleeding จาก platelet"], "answer": ["Sedation และ weight gain"], "feedback": "H1 blockade ทำให้ง่วงและน้ำหนักเพิ่ม เป็น off-target effect สำคัญของยาหลายตัว."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "α1 receptor antagonist สัมพันธ์กับ ADR ใด", "options": ["Orthostatic hypotension", "Nausea", "Appetite ลด", "Serotonin syndrome เท่านั้น"], "answer": ["Orthostatic hypotension"], "feedback": "α1 blockade ทำให้หลอดเลือดตอบสนองลดลง จึงเกิด orthostatic hypotension, dizziness และ reflex tachycardia."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "Muscarinic receptor antagonist ทำให้เกิด ADR ใด", "options": ["Dry mouth, blurred vision, constipation, urinary retention", "Hypertensive crisis", "Complex sleep behavior", "คลื่นไส้จาก 5-HT3"], "answer": ["Dry mouth, blurred vision, constipation, urinary retention"], "feedback": "Muscarinic blockade ทำให้เกิด anticholinergic effects: ปากแห้ง ตาพร่า ท้องผูก และปัสสาวะคั่ง."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT1A receptor เมื่อถูกกระตุ้นสัมพันธ์กับฤทธิ์ใด", "options": ["คลายกังวลและเสริมฤทธิ์ต้านซึมเศร้า", "คลื่นไส้และ GI upset", "sexual dysfunction", "orthostatic hypotension เป็นหลัก"], "answer": ["คลายกังวลและเสริมฤทธิ์ต้านซึมเศร้า"], "feedback": "5-HT1A activation/partial agonism สัมพันธ์กับ anxiolytic และ antidepressant effect."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT2A receptor เมื่อถูกกระตุ้นสัมพันธ์กับ ADR ใด", "options": ["Anxiety, insomnia, sexual dysfunction", "Nausea เท่านั้น", "Appetite เพิ่มทันที", "Orthostatic hypotension"], "answer": ["Anxiety, insomnia, sexual dysfunction"], "feedback": "5-HT2A stimulation เป็นตัวกวนสำคัญ ทำให้ anxiety, insomnia, sexual dysfunction และ emotional blunting."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT2C receptor เมื่อถูกกระตุ้นสัมพันธ์กับผลใด", "options": ["Anxiety และ anorexia", "คลื่นไส้อย่างเดียว", "ช่วยนอนหลับโดยตรง", "ทำให้ tyramine สลายลดลง"], "answer": ["Anxiety และ anorexia"], "feedback": "5-HT2C stimulation สัมพันธ์กับ anxiety/activation และ anorexia; หากถูกยับยั้งอาจทำให้ appetite เพิ่ม."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT3 receptor เมื่อถูกกระตุ้นสัมพันธ์กับผลใด", "options": ["Nausea และ GI upset", "Sexual dysfunction", "Orthostatic hypotension", "Seizure จาก Na channel"], "answer": ["Nausea และ GI upset"], "feedback": "5-HT3 เป็น receptor สำคัญที่เกี่ยวกับ nausea, vomiting และ GI problems."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "การยับยั้ง 5-HT2A receptor อาจให้ผลใด", "options": ["ช่วยนอนและลด sexual dysfunction", "เพิ่ม nausea", "ทำให้ hypertensive crisis", "เพิ่ม dry mouth โดยตรง"], "answer": ["ช่วยนอนและลด sexual dysfunction"], "feedback": "5-HT2A antagonism ช่วยลดปัญหาจาก 5-HT2A เช่น insomnia, anxiety และ sexual dysfunction."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "การยับยั้ง 5-HT2C receptor อาจสัมพันธ์กับผลใด", "options": ["เพิ่ม appetite และน้ำหนักตัว", "เพิ่ม nausea อย่างเด่น", "ลด NE/DA เสมอ", "เพิ่ม urinary retention โดยตรง"], "answer": ["เพิ่ม appetite และน้ำหนักตัว"], "feedback": "5-HT2C antagonism อาจเพิ่ม appetite และน้ำหนักตัว และอาจเพิ่ม NE/DA ได้."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "การยับยั้ง 5-HT3 receptor ให้ผลใด", "options": ["คลื่นไส้น้อยลง", "sexual dysfunction เพิ่มขึ้นเสมอ", "orthostatic hypotension", "เพิ่ม bleeding จาก platelet โดยตรง"], "answer": ["คลื่นไส้น้อยลง"], "feedback": "5-HT3 antagonism ลด nausea/GI upset."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★★", "question": "Antidepressant/anxiolytic effect ที่เกี่ยวกับ 5-HT1A มักเป็น acute หรือ delayed effect", "options": ["Delayed เพราะต้องอาศัย receptor adaptation/desensitization", "Acute เสมอภายในไม่กี่นาที", "ไม่เกี่ยวกับ receptor adaptation", "เกิดเฉพาะที่ H1 receptor"], "answer": ["Delayed เพราะต้องอาศัย receptor adaptation/desensitization"], "feedback": "ผลรักษาหลายกรณีเกิดช้า เพราะต้องรอการปรับตัว เช่น desensitization/downregulation ของ receptor และ neuroplasticity."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★★", "question": "Precaution สำคัญในช่วงต้นของการใช้ antidepressants คือข้อใด", "options": ["ติดตามความคิดหรือพฤติกรรมฆ่าตัวตาย โดยเฉพาะอายุน้อยกว่า 24 ปี", "ให้กินอาหาร tyramine สูง", "หยุดยาเองทันทีเมื่อดีขึ้น", "ใช้ร่วม alcohol เพื่อเพิ่มฤทธิ์"], "answer": ["ติดตามความคิดหรือพฤติกรรมฆ่าตัวตาย โดยเฉพาะอายุน้อยกว่า 24 ปี"], "feedback": "ช่วงต้นของการรักษา antidepressants ต้องติดตาม suicidality โดยเฉพาะผู้ป่วยอายุน้อยกว่า 24 ปี."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Fluoxetine อยู่ในกลุ่มใด", "options": ["SSRI", "SNRI", "TCA", "MAOI"], "answer": ["SSRI"], "feedback": "Fluoxetine เป็น SSRI."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Desvenlafaxine และ duloxetine อยู่ในกลุ่มใด", "options": ["SNRIs", "SSRIs", "BZDs", "Z-drugs"], "answer": ["SNRIs"], "feedback": "Desvenlafaxine และ duloxetine เป็น SNRIs เพิ่ม 5-HT และ NE."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Amitriptyline และ nortriptyline อยู่ในกลุ่มใด", "options": ["TCAs", "SSRIs", "MAOIs", "SARIs"], "answer": ["TCAs"], "feedback": "Amitriptyline และ nortriptyline เป็น tricyclic antidepressants."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Trazodone อยู่ในกลุ่มใด", "options": ["SARI", "NDRI", "MAOI", "Orexin antagonist"], "answer": ["SARI"], "feedback": "Trazodone เป็น Serotonin Antagonist and Reuptake Inhibitor (SARI)."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Bupropion อยู่ในกลุ่มใด", "options": ["NDRI", "SSRI", "TCA", "Melatonin receptor agonist"], "answer": ["NDRI"], "feedback": "Bupropion เป็น Norepinephrine-Dopamine Reuptake Inhibitor (NDRI)."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Mirtazapine มีกลไกเด่นข้อใด", "options": ["α2 antagonist และ 5-HT antagonist", "MAO inhibitor", "Z-drug ที่จับ α1 subtype", "Orexin antagonist"], "answer": ["α2 antagonist และ 5-HT antagonist"], "feedback": "Mirtazapine มี α2 antagonism และ 5-HT2/5-HT3 antagonism รวมถึง H1 antagonism."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Esketamine สัมพันธ์กับกลไกใด", "options": ["NMDA receptor antagonist", "SERT inhibitor", "MAO inhibitor", "H1 antagonist เท่านั้น"], "answer": ["NMDA receptor antagonist"], "feedback": "Esketamine เป็น NMDA receptor antagonist."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "SSRI ทำให้ความต้องการทางเพศลดลงผ่าน receptor ใดเป็นหลัก", "options": ["5-HT2A", "5-HT3", "H1", "α1"], "answer": ["5-HT2A"], "feedback": "Sexual dysfunction จาก SSRIs สัมพันธ์กับการกระตุ้น 5-HT2A receptors."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "SSRI ทำให้ nausea ผ่าน receptor ใด", "options": ["5-HT3", "5-HT1A", "DAT", "Na channel"], "answer": ["5-HT3"], "feedback": "Nausea/GI upset จาก serotonergic drugs สัมพันธ์กับ 5-HT3 receptor."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "SSRI/SNRI เพิ่มความเสี่ยง bleeding เพราะกลไกใด", "options": ["ยับยั้ง SERT บนเกล็ดเลือด ทำให้ platelet มี 5-HT ลดลง", "ยับยั้ง MAO ทำให้ tyramine สูง", "block H1 โดยตรง", "block Na channel ในหัวใจ"], "answer": ["ยับยั้ง SERT บนเกล็ดเลือด ทำให้ platelet มี 5-HT ลดลง"], "feedback": "Platelet ใช้ SERT รับ 5-HT; SERT inhibition ทำให้ platelet aggregation ลดลง จึงเพิ่ม bleeding risk."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "multi", "difficulty": "★", "question": "ข้อใดเป็น ADR ที่สัมพันธ์กับ TCAs เลือกได้มากกว่า 1 ข้อ", "options": ["ปากแห้ง/ท้องผูก/ปัสสาวะคั่ง", "Orthostatic hypotension", "Sedation/weight gain", "Arrhythmia, seizure, overdose fatal", "Hypertensive crisis จาก tyramine เท่านั้น"], "answer": ["ปากแห้ง/ท้องผูก/ปัสสาวะคั่ง", "Orthostatic hypotension", "Sedation/weight gain", "Arrhythmia, seizure, overdose fatal"], "feedback": "TCAs มี anticholinergic effect, α1 blockade, H1 blockade และ Na channel blockade จึงมี ADR หลายด้าน."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "TCA ทำให้ arrhythmia, seizure และ overdose fatal ผ่านกลไกใด", "options": ["Na channel blockade", "5-HT3 stimulation", "H1 blockade เท่านั้น", "α2 antagonism"], "answer": ["Na channel blockade"], "feedback": "TCA overdose อันตรายจาก sodium channel blockade ทำให้ arrhythmia และ seizure."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Mirtazapine/mianserin: 5-HT2C antagonist ทำให้เกิด ADR ใด", "options": ["Appetite เพิ่ม น้ำหนักตัวเพิ่ม", "Hypertensive crisis", "Complex sleep behavior", "Bleeding risk จาก platelet"], "answer": ["Appetite เพิ่ม น้ำหนักตัวเพิ่ม"], "feedback": "5-HT2C antagonism เพิ่ม appetite และน้ำหนักตัว."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Mirtazapine/mianserin: H1 antagonist ทำให้เกิดผลใด", "options": ["ง่วงและน้ำหนักเพิ่ม", "sexual dysfunction เด่น", "hypertensive crisis", "urinary retention อย่างเดียว"], "answer": ["ง่วงและน้ำหนักเพิ่ม"], "feedback": "H1 blockade เป็นสาเหตุสำคัญของ sedation และ weight gain."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "MAOI ร่วมกับยาที่ยับยั้งการเก็บกลับ 5-HT อาจทำให้เกิดภาวะใด", "options": ["Serotonin syndrome", "Complex sleep behavior", "Lithium toxicity", "SJS/TEN"], "answer": ["Serotonin syndrome"], "feedback": "MAOI ร่วมกับ serotonergic drugs อาจทำให้ 5-HT สูงจนเกิด serotonin syndrome."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "MAOI ร่วมกับอาหาร tyramine สูงทำให้เกิดภาวะใด", "options": ["Hypertensive crisis", "Anterograde amnesia", "M1 blockade", "5-HT3 blockade"], "answer": ["Hypertensive crisis"], "feedback": "Tyramine กระตุ้น NE; MAOIs ลดการสลาย tyramine/NE ทำให้ NE สูงมากและเกิด hypertensive crisis."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Lithium มีข้อควรระวังสำคัญด้านใด", "options": ["Narrow therapeutic index / lithium toxicity", "Complex sleep behavior", "Tyramine interaction", "5-HT3 nausea เท่านั้น"], "answer": ["Narrow therapeutic index / lithium toxicity"], "feedback": "Lithium มีช่วงการรักษาแคบ ต้องระวัง toxicity และติดตามระดับยา รวมถึงไตและ thyroid."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★★", "question": "ยากันชักที่ใช้เป็น mood stabilizers มักลดการส่งกระแสประสาทมากเกินไปผ่านกลไกใด", "options": ["ยับยั้ง voltage-sensitive sodium channels และลด glutamate/เสริม GABA", "ยับยั้ง H1 เป็นหลัก", "เพิ่ม tyramine", "ยับยั้ง SERT บน platelet"], "answer": ["ยับยั้ง voltage-sensitive sodium channels และลด glutamate/เสริม GABA"], "feedback": "Anticonvulsant mood stabilizers หลายตัวลด excitatory transmission ผ่าน Na channel blockade, เสริม GABA และลด glutamate."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "ยากลุ่มใดเหมาะสำหรับความวิตกกังวลรุนแรงแบบเฉียบพลันมากที่สุด", "options": ["Benzodiazepines", "SSRIs เท่านั้น", "Buspirone เท่านั้น", "Melatonin receptor agonists"], "answer": ["Benzodiazepines"], "feedback": "Benzodiazepines ออกฤทธิ์เร็วผ่าน GABA-A PAM จึงเหมาะกับ acute severe anxiety แต่ต้องระวัง sedation/dependence."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Benzodiazepines เปิดช่อง Cl⁻ อย่างไร", "options": ["เพิ่ม frequency ของการเปิดช่อง Cl⁻", "เพิ่ม duration ของการเปิดช่อง Cl⁻", "ปิดช่อง Cl⁻", "ยับยั้ง orexin"], "answer": ["เพิ่ม frequency ของการเปิดช่อง Cl⁻"], "feedback": "Benzodiazepines เป็น GABA-A PAM ที่เพิ่ม frequency ของ Cl⁻ channel opening."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Barbiturates แตกต่างจาก benzodiazepines อย่างไรในผลต่อ Cl⁻ channel", "options": ["เพิ่ม duration ของการเปิดช่อง Cl⁻", "เพิ่ม frequency เหมือน BZD เท่านั้น", "ยับยั้ง 5-HT3", "ยับยั้ง MAO"], "answer": ["เพิ่ม duration ของการเปิดช่อง Cl⁻"], "feedback": "Barbiturates เพิ่ม duration ของ Cl⁻ channel opening และกด CNS มากกว่า BZDs."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "GABA-A α1 subtype เด่นกับผลทางคลินิกใด", "options": ["Sedation/hypnotic, anticonvulsant, amnesia", "Anxiolytic เท่านั้น", "Hypertensive crisis", "Appetite เพิ่มเท่านั้น"], "answer": ["Sedation/hypnotic, anticonvulsant, amnesia"], "feedback": "α1 subtype เกี่ยวกับ sedation/hypnotic effects, anticonvulsant effect และ amnesia."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "multi", "difficulty": "★", "question": "GABA-A α2 และ α3 subtypes เกี่ยวข้องกับผลใด เลือกได้มากกว่า 1 ข้อ", "options": ["Anxiolytic", "Muscle relaxant", "Hypertensive crisis", "Nausea จาก 5-HT3"], "answer": ["Anxiolytic", "Muscle relaxant"], "feedback": "α2 และ α3 subtypes เกี่ยวข้องกับ anxiolytic และ muscle relaxant effects."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Alprazolam, lorazepam, clonazepam, diazepam และ midazolam อยู่ในกลุ่มใด", "options": ["Benzodiazepines", "Barbiturates", "Z-drugs", "α2δ ligands"], "answer": ["Benzodiazepines"], "feedback": "ยาทั้งหมดนี้เป็น benzodiazepines."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Gabapentin และ pregabalin อยู่ในกลุ่มใดในบริบท anxiolytics", "options": ["α2δ ligands", "SSRIs", "TCAs", "Barbiturates"], "answer": ["α2δ ligands"], "feedback": "Gabapentin และ pregabalin เป็น α2δ ligands ซึ่งลดการทำงานของ calcium channels และลด glutamate release."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Diazepam สำหรับคลายกังวล คำเตือนบนฉลากที่เหมาะสมคือข้อใด", "options": ["ยานี้ทำให้ง่วงซึม หลีกเลี่ยงการขับขี่ยานพาหนะ", "ควรกินร่วม alcohol เพื่อเสริมฤทธิ์", "ควรกินอาหาร tyramine สูง", "หยุดยาทันทีเมื่อใช้เกิน 3 วัน"], "answer": ["ยานี้ทำให้ง่วงซึม หลีกเลี่ยงการขับขี่ยานพาหนะ"], "feedback": "Diazepam ทำให้ง่วงและกด CNS จึงควรหลีกเลี่ยงการขับรถ/ใช้เครื่องจักร."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Zolpidem อยู่ในกลุ่มใด", "options": ["Z-drugs", "Benzodiazepines", "Melatonin receptor agonists", "SARIs"], "answer": ["Z-drugs"], "feedback": "Zolpidem เป็น Z-drug ใช้เป็น hypnotic."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Ramelteon อยู่ในกลุ่มใด", "options": ["Melatonin receptor agonists", "Orexin antagonists", "SARIs", "BZDs"], "answer": ["Melatonin receptor agonists"], "feedback": "Ramelteon เป็น melatonin receptor agonist."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Lemborexant อยู่ในกลุ่มใด", "options": ["Orexin antagonists", "Z-drugs", "TCAs", "SSRIs"], "answer": ["Orexin antagonists"], "feedback": "Lemborexant เป็น orexin receptor antagonist ลด wake drive."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Trazodone ใช้เป็นยานอนหลับโดยเกี่ยวข้องกับ receptor ใด", "options": ["ยับยั้ง 5-HT2A receptors", "กระตุ้น 5-HT3", "ยับยั้ง MAO", "เพิ่ม tyramine"], "answer": ["ยับยั้ง 5-HT2A receptors"], "feedback": "Trazodone มี 5-HT2A antagonism และยัง block H1/α1 จึงมีฤทธิ์ sedating."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "ADR สำคัญของ Z-drugs ที่ควรจำคือข้อใด", "options": ["Complex sleep behaviors", "Hypertensive crisis จาก tyramine", "SJS/TEN เสมอ", "Bleeding จาก platelet"], "answer": ["Complex sleep behaviors"], "feedback": "Z-drugs เช่น zolpidem อาจทำให้ complex sleep behaviors เช่น ลุกเดินหรือทำกิจกรรมขณะหลับ."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★★", "question": "ผู้ป่วยได้รับ SSRI มาประมาณ 6 เดือน มีอาการนอนไม่หลับ และเริ่มมีน้ำหนักตัวเพิ่ม receptor subtype ใดเกี่ยวข้องกับอาการนอนไม่หลับ", "options": ["5-HT2A", "5-HT3", "α1", "MAO"], "answer": ["5-HT2A"], "feedback": "นอนไม่หลับจาก serotonergic effect สัมพันธ์กับการกระตุ้น 5-HT2A."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★★", "question": "ผู้ป่วยได้รับ SSRI ต่อเนื่องนานและเริ่มมีน้ำหนักตัวเพิ่ม กลไกที่เกี่ยวข้องตามบทเรียนคือข้อใด", "options": ["5-HT2C receptor downregulation", "5-HT3 activation อย่างเดียว", "Na channel blockade", "MAO inhibition"], "answer": ["5-HT2C receptor downregulation"], "feedback": "น้ำหนักเพิ่มเมื่อใช้ SSRI ต่อเนื่องอธิบายได้จาก 5-HT2C receptor downregulation ทำให้ appetite/weight เพิ่ม."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ fluoxetine แล้วอาการซึมเศร้าดีขึ้น แต่มีความต้องการทางเพศลดลง ADR นี้สัมพันธ์กับ receptor ใด", "options": ["5-HT2A", "5-HT3", "H1", "α2δ"], "answer": ["5-HT2A"], "feedback": "Sexual dysfunction จาก SSRIs สัมพันธ์กับ 5-HT2A stimulation."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยซึมเศร้า ไม่มีแรง ขาด motivation ไม่มีสมาธิ และกังวลเรื่อง sexual dysfunction ยาใดเหมาะกว่า SSRI ในบางกรณี", "options": ["Bupropion", "Diazepam", "Phenobarbital", "Ramelteon"], "answer": ["Bupropion"], "feedback": "Bupropion เพิ่ม NE/DA และไม่มีผลต่อ 5-HT เด่น จึงเหมาะกับ low energy/motivation และมี sexual dysfunction ต่ำกว่า SSRI."}, {"category": "Quiz 5: Clinical application cases", "type": "multi", "difficulty": "★", "question": "ผู้ป่วยนอนไม่หลับ ใช้ diazepam ต่อเนื่องนาน ต้องระวังอะไร เลือกได้มากกว่า 1 ข้อ", "options": ["Sedation", "Tolerance/dependence", "Withdrawal", "Fall risk", "Hypertensive crisis จาก tyramine"], "answer": ["Sedation", "Tolerance/dependence", "Withdrawal", "Fall risk"], "feedback": "Diazepam เป็น BZD ต้องระวัง sedation, tolerance/dependence, withdrawal และ fall risk โดยเฉพาะใช้ต่อเนื่อง."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยเริ่ม sertraline ได้ 3 วัน แล้วมีคลื่นไส้ ท้องเสียเล็กน้อย sertraline อยู่ในกลุ่มใด", "options": ["SSRI", "SNRI", "TCA", "Z-drug"], "answer": ["SSRI"], "feedback": "Sertraline เป็น SSRI."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "อาการคลื่นไส้จาก sertraline สัมพันธ์กับ receptor subtype ใด", "options": ["5-HT3", "5-HT1A", "H1", "α1"], "answer": ["5-HT3"], "feedback": "5-HT3 receptor เกี่ยวข้องกับ nausea และ GI upset."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยซึมเศร้า นอนไม่หลับ เบื่ออาหาร น้ำหนักลด ยาใดอาจเหมาะสม", "options": ["Mirtazapine", "Bupropion", "Selegiline", "Zolpidem เป็นยาต้านซึมเศร้าหลัก"], "answer": ["Mirtazapine"], "feedback": "Mirtazapine มี H1 antagonism ช่วยให้ง่วง และ 5-HT2C antagonism ช่วยเพิ่ม appetite."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "กลไกใดของ mirtazapine ช่วยเพิ่ม appetite", "options": ["5-HT2C antagonism", "5-HT3 agonism", "MAO inhibition", "Na channel blockade"], "answer": ["5-HT2C antagonism"], "feedback": "5-HT2C antagonism ทำให้ appetite เพิ่มและน้ำหนักเพิ่มได้."}, {"category": "Quiz 5: Clinical application cases", "type": "multi", "difficulty": "★", "question": "ผู้ป่วยนอนไม่หลับเด่น แพทย์พิจารณา trazodone ขนาดต่ำ กลไกใดช่วยให้นอนหลับ เลือกได้มากกว่า 1 ข้อ", "options": ["Block 5-HT2A", "Block H1", "Block α1", "Inhibit MAO", "Stimulate 5-HT3"], "answer": ["Block 5-HT2A", "Block H1", "Block α1"], "feedback": "Trazodone ช่วยนอนจาก 5-HT2A, H1 และ α1 blockade แต่ต้องระวัง sedation/orthostatic hypotension."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ phenelzine แล้วกินอาหาร tyramine สูง ต่อมาความดันสูงมาก ปวดศีรษะรุนแรง เหตุการณ์นี้เรียกว่าอะไร", "options": ["Hypertensive crisis", "Serotonin withdrawal", "Complex sleep behavior", "Lithium toxicity"], "answer": ["Hypertensive crisis"], "feedback": "MAOI + tyramine อาจทำให้ NE สูงมากจนเกิด hypertensive crisis."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วย bipolar disorder เริ่ม lithium ข้อควรระวังสำคัญคือข้อใด", "options": ["Narrow therapeutic index / lithium toxicity", "5-HT3 nausea เท่านั้น", "Complex sleep behavior", "Tyramine interaction"], "answer": ["Narrow therapeutic index / lithium toxicity"], "feedback": "Lithium มี narrow therapeutic index ต้องติดตามอาการและระดับยา."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยมี panic-like symptoms เฉียบพลัน ต้องการยาที่ออกฤทธิ์เร็ว ควรให้กลุ่มใด", "options": ["Benzodiazepines", "Buspirone เท่านั้น", "Melatonin receptor agonists", "Mirtazapine เท่านั้น"], "answer": ["Benzodiazepines"], "feedback": "BZDs ออกฤทธิ์เร็วผ่าน GABA-A PAM เหมาะกับ acute severe anxiety."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วย generalized anxiety disorder ต้องการยาระยะยาวและไม่อยากเสี่ยง dependence ตัวเลือกใดเหมาะสม", "options": ["SSRIs/SNRIs หรือ buspirone", "Diazepam ต่อเนื่องระยะยาวโดยไม่ติดตาม", "Alcohol ร่วมกับ BZD", "Phenobarbital"], "answer": ["SSRIs/SNRIs หรือ buspirone"], "feedback": "Chronic anxiety ใช้ SSRIs/SNRIs หรือ buspirone ได้ โดย buspirone มี dependence ต่ำกว่า BZD แต่ onset ช้า."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ buspirone แล้วถามว่าทำไมไม่สงบทันทีเหมือน diazepam เหตุผลคือข้อใด", "options": ["5-HT1A partial agonist ต้องอาศัยการปรับตัวของระบบ serotonin", "Buspirone เป็น GABA-A PAM ที่ออกฤทธิ์ทันที", "Buspirone เป็น Z-drug", "Buspirone block H1 เท่านั้น"], "answer": ["5-HT1A partial agonist ต้องอาศัยการปรับตัวของระบบ serotonin"], "feedback": "Buspirone ออกฤทธิ์ผ่าน 5-HT1A partial agonism และต้องอาศัย adaptation จึงไม่ออกฤทธิ์เร็วเหมือน BZDs."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยใช้ diazepam และดื่มเบียร์ทุกวัน เหตุใดจึงไม่ควรใช้ร่วมกัน", "options": ["ต่างกด CNS จึงเสี่ยง respiratory depression", "ทำให้ tyramine สูง", "ทำให้ 5-HT2C downregulation ทันที", "ลด lithium level"], "answer": ["ต่างกด CNS จึงเสี่ยง respiratory depression"], "feedback": "Alcohol และ diazepam ต่างกด CNS จึงเพิ่มความเสี่ยง sedation และ respiratory depression."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ zolpidem แล้วลุกเดิน/ทำกิจกรรมขณะหลับโดยจำไม่ได้ ADR นี้เรียกว่าอะไร", "options": ["Complex sleep behaviors", "Hypertensive crisis", "Serotonin syndrome", "Orthostatic hypotension"], "answer": ["Complex sleep behaviors"], "feedback": "Zolpidem/Z-drugs อาจทำให้ complex sleep behaviors."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยมี depression ร่วมกับ insomnia แพทย์เลือก sedating antidepressant ควรนึกถึงยาใด", "options": ["Trazodone หรือ mirtazapine", "Zolpidem เท่านั้นเป็น antidepressant", "Phenelzine ร่วม tyramine", "Lithium เป็น hypnotic หลัก"], "answer": ["Trazodone หรือ mirtazapine"], "feedback": "Trazodone และ mirtazapine เป็น sedating antidepressants ที่อาจเหมาะใน depression ร่วม insomnia."}];
+const QUESTIONS = [{"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ภาวะ Depression หรือ Major depressive disorder ควรสัมพันธ์กับกลุ่มยาหลักใดมากที่สุด", "options": ["Hypnotic drugs", "Anxiolytic drugs", "Antidepressants", "Antimanic drugs"], "answer": ["Antidepressants"], "feedback": "Depression/MDD ใช้กลุ่ม antidepressants เป็นกลุ่มยาหลักสำหรับการรักษาภาวะซึมเศร้า."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "multi", "difficulty": "★", "question": "Bipolar disorder ในระยะ mania phase สัมพันธ์กับกลุ่มยาใด เลือกได้มากกว่า 1 ข้อ", "options": ["Hypnotic drugs", "Anxiolytic drugs", "Antidepressants", "Mood stabilizers", "Antimanic drugs"], "answer": ["Mood stabilizers", "Antimanic drugs"], "feedback": "Mania phase ใน bipolar disorder ใช้ mood stabilizers และ/หรือ antimanic drugs."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Anxiety disorders สัมพันธ์กับกลุ่มยาใดมากที่สุด", "options": ["Hypnotic drugs", "Anxiolytic drugs", "Antimanic drugs", "NMDA receptor antagonists"], "answer": ["Anxiolytic drugs"], "feedback": "Anxiety disorders ใช้ anxiolytic drugs เช่น SSRIs/SNRIs, benzodiazepines หรือ buspirone."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Insomnia สัมพันธ์กับกลุ่มยาใดมากที่สุด", "options": ["Hypnotic drugs", "Antidepressants เท่านั้น", "Mood stabilizers", "Antimanic drugs"], "answer": ["Hypnotic drugs"], "feedback": "Insomnia ใช้ hypnotic drugs เช่น benzodiazepines, Z-drugs, melatonin agents หรือ sedating antidepressants."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ในภาวะซึมเศร้า การทำงานของ serotonin (5-HT) มีแนวโน้มเปลี่ยนแปลงอย่างไร", "options": ["เพิ่มขึ้น", "ลดลง", "ไม่เกี่ยวข้อง", "เพิ่มขึ้นเฉพาะที่ peripheral tissue เท่านั้น"], "answer": ["ลดลง"], "feedback": "5-HT ลดลงสัมพันธ์กับการเพิ่มขึ้นของอารมณ์ทางลบ เช่น ความเศร้าและความวิตกกังวล."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Norepinephrine (NE) เกี่ยวข้องเด่นกับสิ่งใด", "options": ["พลังงาน สมาธิ BP และ HR", "คลื่นไส้เท่านั้น", "การแข็งตัวของเลือดเท่านั้น", "การสลาย tyramine เท่านั้น"], "answer": ["พลังงาน สมาธิ BP และ HR"], "feedback": "NE เกี่ยวข้องกับ energy/alert, concentration รวมถึงผลต่อ BP และ HR."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "Dopamine (DA) ลดลงในภาวะซึมเศร้า ส่งผลเด่นต่ออาการใด", "options": ["ลด motivation และ pleasure", "เพิ่ม hypertensive crisis", "เพิ่ม complex sleep behavior", "เพิ่ม dry mouth"], "answer": ["ลด motivation และ pleasure"], "feedback": "DA เกี่ยวข้องกับ motivation, pleasure และ activation; เมื่อ DA ลดลงจึงเกิด reduced positive affect."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ข้อใดเป็นภาพจำของ GABA ที่เหมาะสมที่สุด", "options": ["Brake / ระบบยับยั้ง", "Accelerator / ระบบกระตุ้น", "Reward transmitter", "Tyramine metabolism"], "answer": ["Brake / ระบบยับยั้ง"], "feedback": "GABA เป็น inhibitory neurotransmitter เปรียบเหมือนเบรกของระบบประสาท ช่วยสงบ หลับ และกันชัก."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "ข้อใดเป็นภาพจำของ glutamate ที่เหมาะสมที่สุด", "options": ["Accelerator / excitation", "Brake / inhibition", "ตัวรับสำหรับ sexual dysfunction โดยตรง", "เอนไซม์สลาย monoamine"], "answer": ["Accelerator / excitation"], "feedback": "Glutamate เป็น excitatory neurotransmitter เปรียบเหมือน accelerator ของระบบประสาท."}, {"category": "Quiz 1: Big picture + neurotransmitters", "type": "single", "difficulty": "★", "question": "สารสื่อประสาทใดสัมพันธ์กับ motivation, pleasure และ activation มากที่สุด", "options": ["Dopamine", "GABA", "Histamine H1", "Muscarinic receptor"], "answer": ["Dopamine"], "feedback": "Dopamine เกี่ยวข้องกับ drive/reward, motivation, pleasure และ activation."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "SERT inhibitor ทำให้สารใดเพิ่มขึ้นเป็นหลัก", "options": ["5-HT", "NE", "DA", "Tyramine"], "answer": ["5-HT"], "feedback": "SERT คือ serotonin transporter; การยับยั้ง SERT ทำให้ 5-HT ใน synaptic cleft เพิ่มขึ้น."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "NET inhibitor ทำให้เกิดผลใดได้", "options": ["เพิ่ม NE และอาจเพิ่ม DA ในสมองส่วนหน้า", "ลด GABA", "ยับยั้ง MAO โดยตรง", "ยับยั้ง H1 โดยตรง"], "answer": ["เพิ่ม NE และอาจเพิ่ม DA ในสมองส่วนหน้า"], "feedback": "NET inhibition เพิ่ม NE และที่ prefrontal cortex อาจเพิ่ม DA ทางอ้อม จึงช่วย energy/concentration แต่เสี่ยง BP/HR สูง."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "DAT inhibitor เด่นต่อผลทางคลินิกใด", "options": ["เพิ่ม motivation และ reward", "ลดคลื่นไส้ผ่าน 5-HT3", "ลด orthostatic hypotension", "ลด tyramine interaction"], "answer": ["เพิ่ม motivation และ reward"], "feedback": "DAT inhibition เพิ่ม DA โดยเฉพาะใน striatum/nucleus accumbens จึงช่วย motivation, reward และ energy."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "MAO inhibitor ต้องระวัง ADR/interaction ใดมากที่สุด", "options": ["Hypertensive crisis จาก tyramine", "Complex sleep behavior", "Dry mouth จาก M1 block เท่านั้น", "SJS/TEN"], "answer": ["Hypertensive crisis จาก tyramine"], "feedback": "MAOIs ยับยั้งการสลาย monoamines/tyramine อาจทำให้ NE สูงมากและเกิด hypertensive crisis."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "α2 receptor antagonist ทำให้เกิดผลใด", "options": ["เพิ่มการปล่อย NE และ 5-HT", "ลด SERT โดยตรงเท่านั้น", "เพิ่ม chloride duration", "ลด serotonin ทุกตำแหน่ง"], "answer": ["เพิ่มการปล่อย NE และ 5-HT"], "feedback": "α2 antagonism ลด presynaptic brake ของ noradrenergic/serotonergic neurons จึงเพิ่ม NE และ 5-HT."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "H1 receptor antagonist สัมพันธ์กับ ADR ใด", "options": ["Sedation และ weight gain", "Hypertensive crisis", "Sexual dysfunction จาก 5-HT2A", "Bleeding จาก platelet"], "answer": ["Sedation และ weight gain"], "feedback": "H1 blockade ทำให้ง่วงและน้ำหนักเพิ่ม เป็น off-target effect สำคัญของยาหลายตัว."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "α1 receptor antagonist สัมพันธ์กับ ADR ใด", "options": ["Orthostatic hypotension", "Nausea", "Appetite ลด", "Serotonin syndrome เท่านั้น"], "answer": ["Orthostatic hypotension"], "feedback": "α1 blockade ทำให้หลอดเลือดตอบสนองลดลง จึงเกิด orthostatic hypotension, dizziness และ reflex tachycardia."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "Muscarinic receptor antagonist ทำให้เกิด ADR ใด", "options": ["Dry mouth, blurred vision, constipation, urinary retention", "Hypertensive crisis", "Complex sleep behavior", "คลื่นไส้จาก 5-HT3"], "answer": ["Dry mouth, blurred vision, constipation, urinary retention"], "feedback": "Muscarinic blockade ทำให้เกิด anticholinergic effects: ปากแห้ง ตาพร่า ท้องผูก และปัสสาวะคั่ง."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT1A receptor เมื่อถูกกระตุ้นสัมพันธ์กับฤทธิ์ใด", "options": ["คลายกังวลและเสริมฤทธิ์ต้านซึมเศร้า", "คลื่นไส้และ GI upset", "sexual dysfunction", "orthostatic hypotension เป็นหลัก"], "answer": ["คลายกังวลและเสริมฤทธิ์ต้านซึมเศร้า"], "feedback": "5-HT1A activation/partial agonism สัมพันธ์กับ anxiolytic และ antidepressant effect."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT2A receptor เมื่อถูกกระตุ้นสัมพันธ์กับ ADR ใด", "options": ["Anxiety, insomnia, sexual dysfunction", "Nausea เท่านั้น", "Appetite เพิ่มทันที", "Orthostatic hypotension"], "answer": ["Anxiety, insomnia, sexual dysfunction"], "feedback": "5-HT2A stimulation เป็นตัวกวนสำคัญ ทำให้ anxiety, insomnia, sexual dysfunction และ emotional blunting."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT2C receptor เมื่อถูกกระตุ้นสัมพันธ์กับผลใด", "options": ["Anxiety และ anorexia", "คลื่นไส้อย่างเดียว", "ช่วยนอนหลับโดยตรง", "ทำให้ tyramine สลายลดลง"], "answer": ["Anxiety และ anorexia"], "feedback": "5-HT2C stimulation สัมพันธ์กับ anxiety/activation และ anorexia; หากถูกยับยั้งอาจทำให้ appetite เพิ่ม."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "5-HT3 receptor เมื่อถูกกระตุ้นสัมพันธ์กับผลใด", "options": ["Nausea และ GI upset", "Sexual dysfunction", "Orthostatic hypotension", "Seizure จาก Na channel"], "answer": ["Nausea และ GI upset"], "feedback": "5-HT3 เป็น receptor สำคัญที่เกี่ยวกับ nausea, vomiting และ GI problems."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "การยับยั้ง 5-HT2A receptor อาจให้ผลใด", "options": ["ช่วยนอนและลด sexual dysfunction", "เพิ่ม nausea", "ทำให้ hypertensive crisis", "เพิ่ม dry mouth โดยตรง"], "answer": ["ช่วยนอนและลด sexual dysfunction"], "feedback": "5-HT2A antagonism ช่วยลดปัญหาจาก 5-HT2A เช่น insomnia, anxiety และ sexual dysfunction."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "การยับยั้ง 5-HT2C receptor อาจสัมพันธ์กับผลใด", "options": ["เพิ่ม appetite และน้ำหนักตัว", "เพิ่ม nausea อย่างเด่น", "ลด NE/DA เสมอ", "เพิ่ม urinary retention โดยตรง"], "answer": ["เพิ่ม appetite และน้ำหนักตัว"], "feedback": "5-HT2C antagonism อาจเพิ่ม appetite และน้ำหนักตัว และอาจเพิ่ม NE/DA ได้."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★", "question": "การยับยั้ง 5-HT3 receptor ให้ผลใด", "options": ["คลื่นไส้น้อยลง", "sexual dysfunction เพิ่มขึ้นเสมอ", "orthostatic hypotension", "เพิ่ม bleeding จาก platelet โดยตรง"], "answer": ["คลื่นไส้น้อยลง"], "feedback": "5-HT3 antagonism ลด nausea/GI upset."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★★", "question": "Antidepressant/anxiolytic effect ที่เกี่ยวกับ 5-HT1A มักเป็น acute หรือ delayed effect", "options": ["Delayed เพราะต้องอาศัย receptor adaptation/desensitization", "Acute เสมอภายในไม่กี่นาที", "ไม่เกี่ยวกับ receptor adaptation", "เกิดเฉพาะที่ H1 receptor"], "answer": ["Delayed เพราะต้องอาศัย receptor adaptation/desensitization"], "feedback": "ผลรักษาหลายกรณีเกิดช้า เพราะต้องรอการปรับตัว เช่น desensitization/downregulation ของ receptor และ neuroplasticity."}, {"category": "Quiz 2: Mechanism mapping + 5-HT receptors", "type": "single", "difficulty": "★★", "question": "Precaution สำคัญในช่วงต้นของการใช้ antidepressants คือข้อใด", "options": ["ติดตามความคิดหรือพฤติกรรมฆ่าตัวตาย โดยเฉพาะอายุน้อยกว่า 24 ปี", "ให้กินอาหาร tyramine สูง", "หยุดยาเองทันทีเมื่อดีขึ้น", "ใช้ร่วม alcohol เพื่อเพิ่มฤทธิ์"], "answer": ["ติดตามความคิดหรือพฤติกรรมฆ่าตัวตาย โดยเฉพาะอายุน้อยกว่า 24 ปี"], "feedback": "ช่วงต้นของการรักษา antidepressants ต้องติดตาม suicidality โดยเฉพาะผู้ป่วยอายุน้อยกว่า 24 ปี."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Fluoxetine อยู่ในกลุ่มใด", "options": ["SSRI", "SNRI", "TCA", "MAOI"], "answer": ["SSRI"], "feedback": "Fluoxetine เป็น SSRI."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Desvenlafaxine และ duloxetine อยู่ในกลุ่มใด", "options": ["SNRIs", "SSRIs", "BZDs", "Z-drugs"], "answer": ["SNRIs"], "feedback": "Desvenlafaxine และ duloxetine เป็น SNRIs เพิ่ม 5-HT และ NE."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Amitriptyline และ nortriptyline อยู่ในกลุ่มใด", "options": ["TCAs", "SSRIs", "MAOIs", "SARIs"], "answer": ["TCAs"], "feedback": "Amitriptyline และ nortriptyline เป็น tricyclic antidepressants."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Trazodone อยู่ในกลุ่มใด", "options": ["SARI", "NDRI", "MAOI", "Orexin antagonist"], "answer": ["SARI"], "feedback": "Trazodone เป็น Serotonin Antagonist and Reuptake Inhibitor (SARI)."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Bupropion อยู่ในกลุ่มใด", "options": ["NDRI", "SSRI", "TCA", "Melatonin receptor agonist"], "answer": ["NDRI"], "feedback": "Bupropion เป็น Norepinephrine-Dopamine Reuptake Inhibitor (NDRI)."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Mirtazapine มีกลไกเด่นข้อใด", "options": ["α2 antagonist และ 5-HT antagonist", "MAO inhibitor", "Z-drug ที่จับ α1 subtype", "Orexin antagonist"], "answer": ["α2 antagonist และ 5-HT antagonist"], "feedback": "Mirtazapine มี α2 antagonism และ 5-HT2/5-HT3 antagonism รวมถึง H1 antagonism."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Esketamine สัมพันธ์กับกลไกใด", "options": ["NMDA receptor antagonist", "SERT inhibitor", "MAO inhibitor", "H1 antagonist เท่านั้น"], "answer": ["NMDA receptor antagonist"], "feedback": "Esketamine เป็น NMDA receptor antagonist."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "SSRI ทำให้ความต้องการทางเพศลดลงผ่าน receptor ใดเป็นหลัก", "options": ["5-HT2A", "5-HT3", "H1", "α1"], "answer": ["5-HT2A"], "feedback": "Sexual dysfunction จาก SSRIs สัมพันธ์กับการกระตุ้น 5-HT2A receptors."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "SSRI ทำให้ nausea ผ่าน receptor ใด", "options": ["5-HT3", "5-HT1A", "DAT", "Na channel"], "answer": ["5-HT3"], "feedback": "Nausea/GI upset จาก serotonergic drugs สัมพันธ์กับ 5-HT3 receptor."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "SSRI/SNRI เพิ่มความเสี่ยง bleeding เพราะกลไกใด", "options": ["ยับยั้ง SERT บนเกล็ดเลือด ทำให้ platelet มี 5-HT ลดลง", "ยับยั้ง MAO ทำให้ tyramine สูง", "block H1 โดยตรง", "block Na channel ในหัวใจ"], "answer": ["ยับยั้ง SERT บนเกล็ดเลือด ทำให้ platelet มี 5-HT ลดลง"], "feedback": "Platelet ใช้ SERT รับ 5-HT; SERT inhibition ทำให้ platelet aggregation ลดลง จึงเพิ่ม bleeding risk."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "multi", "difficulty": "★", "question": "ข้อใดเป็น ADR ที่สัมพันธ์กับ TCAs เลือกได้มากกว่า 1 ข้อ", "options": ["ปากแห้ง/ท้องผูก/ปัสสาวะคั่ง", "Orthostatic hypotension", "Sedation/weight gain", "Arrhythmia, seizure, overdose fatal", "Hypertensive crisis จาก tyramine เท่านั้น"], "answer": ["ปากแห้ง/ท้องผูก/ปัสสาวะคั่ง", "Orthostatic hypotension", "Sedation/weight gain", "Arrhythmia, seizure, overdose fatal"], "feedback": "TCAs มี anticholinergic effect, α1 blockade, H1 blockade และ Na channel blockade จึงมี ADR หลายด้าน."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "TCA ทำให้ arrhythmia, seizure และ overdose fatal ผ่านกลไกใด", "options": ["Na channel blockade", "5-HT3 stimulation", "H1 blockade เท่านั้น", "α2 antagonism"], "answer": ["Na channel blockade"], "feedback": "TCA overdose อันตรายจาก sodium channel blockade ทำให้ arrhythmia และ seizure."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Mirtazapine/mianserin: 5-HT2C antagonist ทำให้เกิด ADR ใด", "options": ["Appetite เพิ่ม น้ำหนักตัวเพิ่ม", "Hypertensive crisis", "Complex sleep behavior", "Bleeding risk จาก platelet"], "answer": ["Appetite เพิ่ม น้ำหนักตัวเพิ่ม"], "feedback": "5-HT2C antagonism เพิ่ม appetite และน้ำหนักตัว."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "Mirtazapine/mianserin: H1 antagonist ทำให้เกิดผลใด", "options": ["ง่วงและน้ำหนักเพิ่ม", "sexual dysfunction เด่น", "hypertensive crisis", "urinary retention อย่างเดียว"], "answer": ["ง่วงและน้ำหนักเพิ่ม"], "feedback": "H1 blockade เป็นสาเหตุสำคัญของ sedation และ weight gain."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "MAOI ร่วมกับยาที่ยับยั้งการเก็บกลับ 5-HT อาจทำให้เกิดภาวะใด", "options": ["Serotonin syndrome", "Complex sleep behavior", "Lithium toxicity", "SJS/TEN"], "answer": ["Serotonin syndrome"], "feedback": "MAOI ร่วมกับ serotonergic drugs อาจทำให้ 5-HT สูงจนเกิด serotonin syndrome."}, {"category": "Quiz 3: Antidepressants + ADRs", "type": "single", "difficulty": "★", "question": "MAOI ร่วมกับอาหาร tyramine สูงทำให้เกิดภาวะใด", "options": ["Hypertensive crisis", "Anterograde amnesia", "M1 blockade", "5-HT3 blockade"], "answer": ["Hypertensive crisis"], "feedback": "Tyramine กระตุ้น NE; MAOIs ลดการสลาย tyramine/NE ทำให้ NE สูงมากและเกิด hypertensive crisis."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Lithium มีข้อควรระวังสำคัญด้านใด", "options": ["Narrow therapeutic index / lithium toxicity", "Complex sleep behavior", "Tyramine interaction", "5-HT3 nausea เท่านั้น"], "answer": ["Narrow therapeutic index / lithium toxicity"], "feedback": "Lithium มีช่วงการรักษาแคบ ต้องระวัง toxicity และติดตามระดับยา รวมถึงไตและ thyroid."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★★", "question": "ยากันชักที่ใช้เป็น mood stabilizers มักลดการส่งกระแสประสาทมากเกินไปผ่านกลไกใด", "options": ["ยับยั้ง voltage-sensitive sodium channels และลด glutamate/เสริม GABA", "ยับยั้ง H1 เป็นหลัก", "เพิ่ม tyramine", "ยับยั้ง SERT บน platelet"], "answer": ["ยับยั้ง voltage-sensitive sodium channels และลด glutamate/เสริม GABA"], "feedback": "Anticonvulsant mood stabilizers หลายตัวลด excitatory transmission ผ่าน Na channel blockade, เสริม GABA และลด glutamate."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "ยากลุ่มใดเหมาะสำหรับความวิตกกังวลรุนแรงแบบเฉียบพลันมากที่สุด", "options": ["Benzodiazepines", "SSRIs เท่านั้น", "Buspirone เท่านั้น", "Melatonin receptor agonists"], "answer": ["Benzodiazepines"], "feedback": "Benzodiazepines ออกฤทธิ์เร็วผ่าน GABA-A PAM จึงเหมาะกับ acute severe anxiety แต่ต้องระวัง sedation/dependence."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Benzodiazepines เปิดช่อง Cl⁻ อย่างไร", "options": ["เพิ่ม frequency ของการเปิดช่อง Cl⁻", "เพิ่ม duration ของการเปิดช่อง Cl⁻", "ปิดช่อง Cl⁻", "ยับยั้ง orexin"], "answer": ["เพิ่ม frequency ของการเปิดช่อง Cl⁻"], "feedback": "Benzodiazepines เป็น GABA-A PAM ที่เพิ่ม frequency ของ Cl⁻ channel opening."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Barbiturates แตกต่างจาก benzodiazepines อย่างไรในผลต่อ Cl⁻ channel", "options": ["เพิ่ม duration ของการเปิดช่อง Cl⁻", "เพิ่ม frequency เหมือน BZD เท่านั้น", "ยับยั้ง 5-HT3", "ยับยั้ง MAO"], "answer": ["เพิ่ม duration ของการเปิดช่อง Cl⁻"], "feedback": "Barbiturates เพิ่ม duration ของ Cl⁻ channel opening และกด CNS มากกว่า BZDs."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "GABA-A α1 subtype เด่นกับผลทางคลินิกใด", "options": ["Sedation/hypnotic, anticonvulsant, amnesia", "Anxiolytic เท่านั้น", "Hypertensive crisis", "Appetite เพิ่มเท่านั้น"], "answer": ["Sedation/hypnotic, anticonvulsant, amnesia"], "feedback": "α1 subtype เกี่ยวกับ sedation/hypnotic effects, anticonvulsant effect และ amnesia."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "multi", "difficulty": "★", "question": "GABA-A α2 และ α3 subtypes เกี่ยวข้องกับผลใด เลือกได้มากกว่า 1 ข้อ", "options": ["Anxiolytic", "Muscle relaxant", "Hypertensive crisis", "Nausea จาก 5-HT3"], "answer": ["Anxiolytic", "Muscle relaxant"], "feedback": "α2 และ α3 subtypes เกี่ยวข้องกับ anxiolytic และ muscle relaxant effects."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Alprazolam, lorazepam, clonazepam, diazepam และ midazolam อยู่ในกลุ่มใด", "options": ["Benzodiazepines", "Barbiturates", "Z-drugs", "α2δ ligands"], "answer": ["Benzodiazepines"], "feedback": "ยาทั้งหมดนี้เป็น benzodiazepines."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Gabapentin และ pregabalin อยู่ในกลุ่มใดในบริบท anxiolytics", "options": ["α2δ ligands", "SSRIs", "TCAs", "Barbiturates"], "answer": ["α2δ ligands"], "feedback": "Gabapentin และ pregabalin เป็น α2δ ligands ซึ่งลดการทำงานของ calcium channels และลด glutamate release."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Diazepam สำหรับคลายกังวล คำเตือนบนฉลากที่เหมาะสมคือข้อใด", "options": ["ยานี้ทำให้ง่วงซึม หลีกเลี่ยงการขับขี่ยานพาหนะ", "ควรกินร่วม alcohol เพื่อเสริมฤทธิ์", "ควรกินอาหาร tyramine สูง", "หยุดยาทันทีเมื่อใช้เกิน 3 วัน"], "answer": ["ยานี้ทำให้ง่วงซึม หลีกเลี่ยงการขับขี่ยานพาหนะ"], "feedback": "Diazepam ทำให้ง่วงและกด CNS จึงควรหลีกเลี่ยงการขับรถ/ใช้เครื่องจักร."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Zolpidem อยู่ในกลุ่มใด", "options": ["Z-drugs", "Benzodiazepines", "Melatonin receptor agonists", "SARIs"], "answer": ["Z-drugs"], "feedback": "Zolpidem เป็น Z-drug ใช้เป็น hypnotic."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Ramelteon อยู่ในกลุ่มใด", "options": ["Melatonin receptor agonists", "Orexin antagonists", "SARIs", "BZDs"], "answer": ["Melatonin receptor agonists"], "feedback": "Ramelteon เป็น melatonin receptor agonist."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Lemborexant อยู่ในกลุ่มใด", "options": ["Orexin antagonists", "Z-drugs", "TCAs", "SSRIs"], "answer": ["Orexin antagonists"], "feedback": "Lemborexant เป็น orexin receptor antagonist ลด wake drive."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "Trazodone ใช้เป็นยานอนหลับโดยเกี่ยวข้องกับ receptor ใด", "options": ["ยับยั้ง 5-HT2A receptors", "กระตุ้น 5-HT3", "ยับยั้ง MAO", "เพิ่ม tyramine"], "answer": ["ยับยั้ง 5-HT2A receptors"], "feedback": "Trazodone มี 5-HT2A antagonism และยัง block H1/α1 จึงมีฤทธิ์ sedating."}, {"category": "Quiz 4: Mood stabilizers, anxiolytics, hypnotics", "type": "single", "difficulty": "★", "question": "ADR สำคัญของ Z-drugs ที่ควรจำคือข้อใด", "options": ["Complex sleep behaviors", "Hypertensive crisis จาก tyramine", "SJS/TEN เสมอ", "Bleeding จาก platelet"], "answer": ["Complex sleep behaviors"], "feedback": "Z-drugs เช่น zolpidem อาจทำให้ complex sleep behaviors เช่น ลุกเดินหรือทำกิจกรรมขณะหลับ."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★★", "question": "ผู้ป่วยได้รับ SSRI มาประมาณ 6 เดือน มีอาการนอนไม่หลับ และเริ่มมีน้ำหนักตัวเพิ่ม receptor subtype ใดเกี่ยวข้องกับอาการนอนไม่หลับ", "options": ["5-HT2A", "5-HT3", "α1", "MAO"], "answer": ["5-HT2A"], "feedback": "นอนไม่หลับจาก serotonergic effect สัมพันธ์กับการกระตุ้น 5-HT2A."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★★", "question": "ผู้ป่วยได้รับ SSRI ต่อเนื่องนานและเริ่มมีน้ำหนักตัวเพิ่ม กลไกที่เกี่ยวข้องตามบทเรียนคือข้อใด", "options": ["5-HT2C receptor downregulation", "5-HT3 activation อย่างเดียว", "Na channel blockade", "MAO inhibition"], "answer": ["5-HT2C receptor downregulation"], "feedback": "น้ำหนักเพิ่มเมื่อใช้ SSRI ต่อเนื่องอธิบายได้จาก 5-HT2C receptor downregulation ทำให้ appetite/weight เพิ่ม."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ fluoxetine แล้วอาการซึมเศร้าดีขึ้น แต่มีความต้องการทางเพศลดลง ADR นี้สัมพันธ์กับ receptor ใด", "options": ["5-HT2A", "5-HT3", "H1", "α2δ"], "answer": ["5-HT2A"], "feedback": "Sexual dysfunction จาก SSRIs สัมพันธ์กับ 5-HT2A stimulation."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยซึมเศร้า ไม่มีแรง ขาด motivation ไม่มีสมาธิ และกังวลเรื่อง sexual dysfunction ยาใดเหมาะกว่า SSRI", "options": ["Bupropion", "Diazepam", "Phenobarbital", "Ramelteon"], "answer": ["Bupropion"], "feedback": "Bupropion เพิ่ม NE/DA และไม่มีผลต่อ 5-HT เด่น จึงเหมาะกับ low energy/motivation และมี sexual dysfunction ต่ำกว่า SSRI."}, {"category": "Quiz 5: Clinical application cases", "type": "multi", "difficulty": "★", "question": "ผู้ป่วยนอนไม่หลับ ใช้ diazepam ต่อเนื่องนาน ต้องระวังอะไร เลือกได้มากกว่า 1 ข้อ", "options": ["Sedation", "Tolerance/dependence", "Withdrawal", "Fall risk", "Hypertensive crisis จาก tyramine"], "answer": ["Sedation", "Tolerance/dependence", "Withdrawal", "Fall risk"], "feedback": "Diazepam เป็น BZD ต้องระวัง sedation, tolerance/dependence, withdrawal และ fall risk โดยเฉพาะใช้ต่อเนื่อง."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยเริ่ม sertraline ได้ 3 วัน แล้วมีคลื่นไส้ ท้องเสียเล็กน้อย sertraline อยู่ในกลุ่มใด", "options": ["SSRI", "SNRI", "TCA", "Z-drug"], "answer": ["SSRI"], "feedback": "Sertraline เป็น SSRI."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "อาการคลื่นไส้จาก sertraline สัมพันธ์กับ receptor subtype ใด", "options": ["5-HT3", "5-HT1A", "H1", "α1"], "answer": ["5-HT3"], "feedback": "5-HT3 receptor เกี่ยวข้องกับ nausea และ GI upset."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยซึมเศร้า นอนไม่หลับ เบื่ออาหาร น้ำหนักลด ยาใดอาจเหมาะสม", "options": ["Mirtazapine", "Bupropion", "Selegiline", "Zolpidem เป็นยาต้านซึมเศร้าหลัก"], "answer": ["Mirtazapine"], "feedback": "Mirtazapine มี H1 antagonism ช่วยให้ง่วง และ 5-HT2C antagonism ช่วยเพิ่ม appetite."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "กลไกใดของ mirtazapine ช่วยเพิ่ม appetite", "options": ["5-HT2C antagonism", "5-HT3 agonism", "MAO inhibition", "Na channel blockade"], "answer": ["5-HT2C antagonism"], "feedback": "5-HT2C antagonism ทำให้ appetite เพิ่มและน้ำหนักเพิ่มได้."}, {"category": "Quiz 5: Clinical application cases", "type": "multi", "difficulty": "★", "question": "ผู้ป่วยนอนไม่หลับเด่น แพทย์พิจารณา trazodone ขนาดต่ำ กลไกใดช่วยให้นอนหลับ เลือกได้มากกว่า 1 ข้อ", "options": ["Block 5-HT2A", "Block H1", "Block α1", "Inhibit MAO", "Stimulate 5-HT3"], "answer": ["Block 5-HT2A", "Block H1", "Block α1"], "feedback": "Trazodone ช่วยนอนจาก 5-HT2A, H1 และ α1 blockade แต่ต้องระวัง sedation/orthostatic hypotension."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ phenelzine แล้วกินอาหาร tyramine สูง ต่อมาความดันสูงมาก ปวดศีรษะรุนแรง เหตุการณ์นี้เรียกว่าอะไร", "options": ["Hypertensive crisis", "Serotonin withdrawal", "Complex sleep behavior", "Lithium toxicity"], "answer": ["Hypertensive crisis"], "feedback": "MAOI + tyramine อาจทำให้ NE สูงมากจนเกิด hypertensive crisis."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วย bipolar disorder เริ่ม lithium ข้อควรระวังสำคัญคือข้อใด", "options": ["Narrow therapeutic index / lithium toxicity", "5-HT3 nausea เท่านั้น", "Complex sleep behavior", "Tyramine interaction"], "answer": ["Narrow therapeutic index / lithium toxicity"], "feedback": "Lithium มี narrow therapeutic index ต้องติดตามอาการและระดับยา."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยมี panic-like symptoms เฉียบพลัน ต้องการยาที่ออกฤทธิ์เร็ว ควรให้กลุ่มใด", "options": ["Benzodiazepines", "Buspirone เท่านั้น", "Melatonin receptor agonists", "Mirtazapine เท่านั้น"], "answer": ["Benzodiazepines"], "feedback": "BZDs ออกฤทธิ์เร็วผ่าน GABA-A PAM เหมาะกับ acute severe anxiety."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วย generalized anxiety disorder ต้องการยาระยะยาวและไม่อยากเสี่ยง dependence ตัวเลือกใดเหมาะสม", "options": ["SSRIs/SNRIs หรือ buspirone", "Diazepam ต่อเนื่องระยะยาวโดยไม่ติดตาม", "Alcohol ร่วมกับ BZD", "Phenobarbital"], "answer": ["SSRIs/SNRIs หรือ buspirone"], "feedback": "Chronic anxiety ใช้ SSRIs/SNRIs หรือ buspirone ได้ โดย buspirone มี dependence ต่ำกว่า BZD แต่ onset ช้า."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ buspirone แล้วถามว่าทำไมไม่สงบทันทีเหมือน diazepam เหตุผลคือข้อใด", "options": ["5-HT1A partial agonist ต้องอาศัยการปรับตัวของระบบ serotonin", "Buspirone เป็น GABA-A PAM ที่ออกฤทธิ์ทันที", "Buspirone เป็น Z-drug", "Buspirone block H1 เท่านั้น"], "answer": ["5-HT1A partial agonist ต้องอาศัยการปรับตัวของระบบ serotonin"], "feedback": "Buspirone ออกฤทธิ์ผ่าน 5-HT1A partial agonism และต้องอาศัย adaptation จึงไม่ออกฤทธิ์เร็วเหมือน BZDs."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยใช้ diazepam และดื่มเบียร์ทุกวัน เหตุใดจึงไม่ควรใช้ร่วมกัน", "options": ["ต่างกด CNS จึงเสี่ยง respiratory depression", "ทำให้ tyramine สูง", "ทำให้ 5-HT2C downregulation ทันที", "ลด lithium level"], "answer": ["ต่างกด CNS จึงเสี่ยง respiratory depression"], "feedback": "Alcohol และ diazepam ต่างกด CNS จึงเพิ่มความเสี่ยง sedation และ respiratory depression."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยได้รับ zolpidem แล้วลุกเดิน/ทำกิจกรรมขณะหลับโดยจำไม่ได้ ADR นี้เรียกว่าอะไร", "options": ["Complex sleep behaviors", "Hypertensive crisis", "Serotonin syndrome", "Orthostatic hypotension"], "answer": ["Complex sleep behaviors"], "feedback": "Zolpidem/Z-drugs อาจทำให้ complex sleep behaviors."}, {"category": "Quiz 5: Clinical application cases", "type": "single", "difficulty": "★", "question": "ผู้ป่วยมี depression ร่วมกับ insomnia แพทย์เลือก sedating antidepressant ควรนึกถึงยาใด", "options": ["Trazodone หรือ mirtazapine", "Zolpidem เท่านั้นเป็น antidepressant", "Phenelzine ร่วม tyramine", "Lithium เป็น hypnotic หลัก"], "answer": ["Trazodone หรือ mirtazapine"], "feedback": "Trazodone และ mirtazapine เป็น sedating antidepressants ที่อาจเหมาะใน depression ร่วม insomnia."}];
+const MATCHING_ITEMS = [{"drug": "Fluoxetine", "answer": "SSRI"}, {"drug": "Sertraline", "answer": "SSRI"}, {"drug": "Escitalopram", "answer": "SSRI"}, {"drug": "Venlafaxine", "answer": "SNRI"}, {"drug": "Duloxetine", "answer": "SNRI"}, {"drug": "Desvenlafaxine", "answer": "SNRI"}, {"drug": "Amitriptyline", "answer": "TCA"}, {"drug": "Nortriptyline", "answer": "TCA"}, {"drug": "Trazodone", "answer": "SARI"}, {"drug": "Bupropion", "answer": "NDRI"}, {"drug": "Mirtazapine", "answer": "α2 antagonist / 5-HT antagonist"}, {"drug": "Selegiline", "answer": "MAOI"}, {"drug": "Agomelatine", "answer": "Melatonin receptor agonist / 5-HT antagonist"}, {"drug": "Esketamine", "answer": "NMDA receptor antagonist"}, {"drug": "Diazepam", "answer": "Benzodiazepine"}, {"drug": "Lorazepam", "answer": "Benzodiazepine"}, {"drug": "Alprazolam", "answer": "Benzodiazepine"}, {"drug": "Zolpidem", "answer": "Z-drug"}, {"drug": "Ramelteon", "answer": "Melatonin receptor agonist"}, {"drug": "Lemborexant", "answer": "Orexin antagonist"}, {"drug": "Gabapentin", "answer": "α2δ ligand"}, {"drug": "Pregabalin", "answer": "α2δ ligand"}, {"drug": "Lithium", "answer": "Mood stabilizer"}, {"drug": "Valproate", "answer": "Mood stabilizer / anticonvulsant"}, {"drug": "Lamotrigine", "answer": "Mood stabilizer / anticonvulsant"}];
+const MATCHING_GROUPS = ["Benzodiazepine", "MAOI", "Melatonin receptor agonist", "Melatonin receptor agonist / 5-HT antagonist", "Mood stabilizer", "Mood stabilizer / anticonvulsant", "NDRI", "NMDA receptor antagonist", "Orexin antagonist", "SARI", "SNRI", "SSRI", "TCA", "Z-drug", "α2 antagonist / 5-HT antagonist", "α2δ ligand"];
+const RECEPTOR_PROMPTS = [{"prompt": "Anxiolytic / antidepressant effect", "answer": "5-HT1A", "hint": "1A = ใจสงบ"}, {"prompt": "Delayed onset จาก autoreceptor desensitization/downregulation", "answer": "5-HT1A", "hint": "5-HT1A autoreceptor เป็น negative feedback หรือเบรกของระบบ serotonin"}, {"prompt": "Sexual dysfunction จาก SSRI", "answer": "5-HT2A", "hint": "2A = ตื่น กังวล sex เสีย"}, {"prompt": "Insomnia / activation จาก serotonergic effect", "answer": "5-HT2A", "hint": "2A เกี่ยวข้องกับ arousal/sleep และ sexual adverse effects"}, {"prompt": "Anxiety / anorexia ช่วงแรกจาก serotonin", "answer": "5-HT2C", "hint": "2C = คุมกิน/เบรก DA-NE"}, {"prompt": "Appetite เพิ่มและน้ำหนักขึ้นเมื่อถูก block", "answer": "5-HT2C", "hint": "Block 2C ทำให้ appetite เพิ่ม"}, {"prompt": "Nausea, vomiting, GI upset", "answer": "5-HT3", "hint": "3 = GI / ท้องไส้"}, {"prompt": "Block แล้วคลื่นไส้น้อยลง", "answer": "5-HT3", "hint": "5-HT3 antagonist มีผลลด nausea"}, {"prompt": "Block แล้วช่วยนอนและลด sexual dysfunction", "answer": "5-HT2A", "hint": "Block 2A ลดปัญหา sleep/sex/anxiety"}, {"prompt": "Block แล้วอาจเพิ่ม DA/NE และเพิ่ม appetite", "answer": "5-HT2C", "hint": "2C เป็นเบรกของ DA/NE และเกี่ยวกับ appetite"}, {"prompt": "Buspirone ออกฤทธิ์หลักที่ receptor ใด", "answer": "5-HT1A", "hint": "Buspirone เป็น 5-HT1A partial agonist"}, {"prompt": "Trazodone ช่วยนอนเด่นจากการ block receptor ใด", "answer": "5-HT2A", "hint": "Trazodone เป็น SARI ที่ block 5-HT2A"}];
+const TWO_STEP = [{"case": "ผู้ป่วยเริ่ม sertraline ได้ 3 วัน แล้วมีอาการคลื่นไส้ ท้องเสียเล็กน้อย", "step1": "อาการนี้สัมพันธ์กับ receptor subtype ใดมากที่สุด", "options1": ["5-HT1A", "5-HT2A", "5-HT2C", "5-HT3"], "answer1": "5-HT3", "step2": "เหตุผลใดถูกต้องที่สุด", "options2": ["5-HT3 เกี่ยวข้องกับ nausea/GI upset", "5-HT2A เกี่ยวข้องกับ sodium channel blockade", "5-HT1A ทำให้ tyramine interaction", "5-HT2C เป็น receptor ของ platelet aggregation โดยตรง"], "answer2": "5-HT3 เกี่ยวข้องกับ nausea/GI upset", "feedback": "Sertraline เป็น SSRI ที่เพิ่ม 5-HT; nausea/GI upset เกี่ยวข้องกับ 5-HT3 receptor."}, {"case": "ผู้ป่วยได้รับ fluoxetine แล้วอาการซึมเศร้าดีขึ้น แต่มีความต้องการทางเพศลดลง", "step1": "ADR นี้สัมพันธ์กับ receptor ใด", "options1": ["5-HT2A", "5-HT3", "H1", "α1"], "answer1": "5-HT2A", "step2": "เหตุผลใดถูกต้องที่สุด", "options2": ["การกระตุ้น 5-HT2A สัมพันธ์กับ sexual dysfunction", "การยับยั้ง MAO ทำให้ libido ลดลงเสมอ", "H1 blockade เป็นกลไกหลักของ sexual dysfunction", "α1 blockade ทำให้ serotonin syndrome"], "answer2": "การกระตุ้น 5-HT2A สัมพันธ์กับ sexual dysfunction", "feedback": "Sexual dysfunction จาก SSRIs สัมพันธ์กับการกระตุ้น 5-HT2A."}, {"case": "ผู้ป่วยซึมเศร้า ไม่มีแรง ขาด motivation ไม่มีสมาธิ และกังวลเรื่อง sexual dysfunction", "step1": "ยาใดเหมาะกว่า SSRI", "options1": ["Bupropion", "Diazepam", "Ramelteon", "Phenobarbital"], "answer1": "Bupropion", "step2": "เหตุผลใดสนับสนุนคำตอบนี้", "options2": ["เพิ่ม NE/DA และ sexual dysfunction ต่ำกว่า SSRI", "เป็น GABA-A PAM ที่ออกฤทธิ์เร็ว", "เป็น melatonin receptor agonist", "เป็น barbiturate ที่เพิ่ม duration ของ Cl⁻ channel"], "answer2": "เพิ่ม NE/DA และ sexual dysfunction ต่ำกว่า SSRI", "feedback": "Bupropion เป็น NDRI เพิ่ม NE/DA เหมาะกับ low energy/motivation และมี sexual dysfunction ต่ำกว่า SSRIs."}, {"case": "ผู้ป่วยซึมเศร้า นอนไม่หลับ เบื่ออาหาร น้ำหนักลด", "step1": "ยาใดอาจเหมาะ", "options1": ["Mirtazapine", "Bupropion", "Selegiline", "Zolpidem"], "answer1": "Mirtazapine", "step2": "กลไกใดอธิบายการช่วยนอนและเพิ่ม appetite", "options2": ["H1 antagonism ทำให้ง่วง และ 5-HT2C antagonism เพิ่ม appetite", "MAO inhibition ทำให้ tyramine ลด", "DAT inhibition ทำให้หลับง่าย", "Orexin agonism เพิ่มการหลับ"], "answer2": "H1 antagonism ทำให้ง่วง และ 5-HT2C antagonism เพิ่ม appetite", "feedback": "Mirtazapine มี H1 antagonism ทำให้ง่วง และ 5-HT2C antagonism เพิ่ม appetite/weight."}, {"case": "ผู้ป่วยนอนไม่หลับเด่น แพทย์พิจารณา trazodone ขนาดต่ำ", "step1": "กลไกใดช่วยให้นอนหลับ", "options1": ["Block 5-HT2A/H1/α1", "Stimulate 5-HT3", "Inhibit MAO", "Activate orexin"], "answer1": "Block 5-HT2A/H1/α1", "step2": "ADR ใดควรระวัง", "options2": ["Sedation และ orthostatic hypotension", "Hypertensive crisis จาก tyramine", "Lithium toxicity", "SJS/TEN เป็น ADR หลักเสมอ"], "answer2": "Sedation และ orthostatic hypotension", "feedback": "Trazodone ช่วยนอนผ่าน 5-HT2A, H1 และ α1 blockade จึงต้องระวัง sedation และ orthostatic hypotension."}, {"case": "ผู้ป่วยได้รับ phenelzine แล้วรับประทานอาหารที่มี tyramine สูง ต่อมาความดันสูงมากและปวดศีรษะรุนแรง", "step1": "เหตุการณ์นี้เรียกว่าอะไร", "options1": ["Hypertensive crisis", "Complex sleep behavior", "Lithium toxicity", "Anterograde amnesia"], "answer1": "Hypertensive crisis", "step2": "กลไกใดถูกต้อง", "options2": ["MAOI ลดการสลาย tyramine/NE ทำให้ NE สูงมาก", "5-HT3 ถูกกระตุ้นจนเกิด GI upset", "H1 ถูก block จึงเกิดความดันสูง", "GABA-A α1 ถูกกระตุ้นจนเกิดความดันสูง"], "answer2": "MAOI ลดการสลาย tyramine/NE ทำให้ NE สูงมาก", "feedback": "MAOI + tyramine ทำให้ NE สูงมากและเกิด hypertensive crisis."}, {"case": "ผู้ป่วย panic-like symptoms เฉียบพลัน ใจสั่น หายใจเร็ว ต้องการยาที่ออกฤทธิ์เร็ว", "step1": "ควรนึกถึงยากลุ่มใด", "options1": ["Benzodiazepines", "Buspirone เท่านั้น", "Melatonin receptor agonists", "Mirtazapine เท่านั้น"], "answer1": "Benzodiazepines", "step2": "เหตุผลใดถูกต้อง", "options2": ["เป็น GABA-A PAM ออกฤทธิ์เร็ว เหมาะกับ acute severe anxiety", "เป็น 5-HT1A partial agonist ที่ต้องรอหลายสัปดาห์", "ยับยั้ง MAO ทำให้ tyramine ลด", "เป็น orexin agonist"], "answer2": "เป็น GABA-A PAM ออกฤทธิ์เร็ว เหมาะกับ acute severe anxiety", "feedback": "Benzodiazepines เสริมฤทธิ์ GABA-A แบบรวดเร็ว จึงเหมาะกับอาการวิตกกังวลรุนแรงเฉียบพลัน."}, {"case": "ผู้ป่วยใช้ diazepam และดื่มเบียร์ทุกวันตอนเย็น", "step1": "เหตุใดจึงไม่ควรใช้ร่วมกับ alcohol", "options1": ["เสี่ยง CNS depression/respiratory depression", "ทำให้ tyramine สูง", "ทำให้ 5-HT2C downregulation ทันที", "ลด lithium level"], "answer1": "เสี่ยง CNS depression/respiratory depression", "step2": "กลไกของ diazepam คือข้อใด", "options2": ["GABA-A positive allosteric modulator", "5-HT3 antagonist", "MAO inhibitor", "NMDA receptor antagonist"], "answer2": "GABA-A positive allosteric modulator", "feedback": "Diazepam เป็น GABA-A PAM และ alcohol กด CNS เช่นกัน จึงเสี่ยง sedation/respiratory depression."}, {"case": "ผู้ป่วยได้รับ zolpidem แล้วลุกเดิน/ทำกิจกรรมขณะหลับโดยจำไม่ได้", "step1": "zolpidem อยู่ในกลุ่มใด", "options1": ["Z-drug", "SSRI", "TCA", "MAOI"], "answer1": "Z-drug", "step2": "ADR นี้เรียกว่าอะไร", "options2": ["Complex sleep behaviors", "Hypertensive crisis", "Serotonin syndrome", "Orthostatic hypotension"], "answer2": "Complex sleep behaviors", "feedback": "Zolpidem เป็น Z-drug และอาจทำให้ complex sleep behaviors."}, {"case": "ผู้ป่วย bipolar disorder เริ่ม lithium", "step1": "ข้อควรระวังสำคัญคือข้อใด", "options1": ["Narrow therapeutic index / lithium toxicity", "Tyramine interaction", "Complex sleep behavior", "5-HT3 nausea เท่านั้น"], "answer1": "Narrow therapeutic index / lithium toxicity", "step2": "สิ่งใดควรติดตามหรือระวัง", "options2": ["ระดับ lithium และผลต่อ kidney/thyroid", "อาหาร tyramine สูงเท่านั้น", "complex sleep behavior เท่านั้น", "platelet aggregation เพิ่มขึ้น"], "answer2": "ระดับ lithium และผลต่อ kidney/thyroid", "feedback": "Lithium มีช่วงการรักษาแคบ ต้องติดตามระดับยาและเฝ้าระวัง kidney/thyroid toxicity."}];
 
 let currentCategory = null;
 let quizQuestions = [];
 let currentIndex = 0;
 let score = 0;
-let answered = false;
 let history = [];
+let lastMode = null;
+let badges = [];
+let currentResultBadges = [];
+let lastWrongQuestions = [];
+
+// Matching state
+let matchingSet = [];
+
+// Receptor state
+let recSet = [], recIndex = 0, recScore = 0, recHistory = [];
+
+// Two-step state
+let twoSet = [], twoIndex = 0, twoScore = 0, twoHistory = [];
 
 function uniqueCategories() {
   return [...new Set(QUESTIONS.map(q => q.category))];
 }
-
-function initHome() {
-  const list = document.getElementById('quizList');
-  list.innerHTML = '';
-  uniqueCategories().forEach(cat => {
-    const count = QUESTIONS.filter(q => q.category === cat).length;
-    const btn = document.createElement('button');
-    btn.className = 'quiz-tile';
-    btn.innerHTML = `<strong>${cat}</strong><br><span class="small">${count} ข้อ</span>`;
-    btn.onclick = () => startQuiz(cat);
-    list.appendChild(btn);
-  });
-  const allBtn = document.createElement('button');
-  allBtn.className = 'quiz-tile';
-  allBtn.innerHTML = `<strong>Mixed quiz: สุ่มรวมทุกหัวข้อ</strong><br><span class="small">20 ข้อจากทั้งหมด</span>`;
-  allBtn.onclick = () => startQuiz('__mixed__');
-  list.appendChild(allBtn);
-}
-
 function shuffle(array) {
   const a = [...array];
   for (let i = a.length - 1; i > 0; i--) {
@@ -230,143 +409,391 @@ function shuffle(array) {
   }
   return a;
 }
+function showOnly(id) {
+  ['home','quiz','matching','receptorGame','twoStep','result'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function initHome() {
+  const list = document.getElementById('quizList');
+  list.innerHTML = '';
+  const items = uniqueCategories().map(cat => {
+    const count = QUESTIONS.filter(q => q.category === cat).length;
+    return {
+      title: cleanCategoryName(cat),
+      subtitle: `${count} ข้อ · feedback ทันที`,
+      icon: categoryIcon(cat),
+      action: () => startQuiz(cat)
+    };
+  });
+  items.push(
+    {title:'Matching: Drug Class Challenge', subtitle:'จับคู่ยา–กลุ่มยา', icon:'🧩', action:startMatching},
+    {title:'5-HT Receptor Subtype Game', subtitle:'เลือก subtype จากอาการ/ผลของยา', icon:'🧠', action:startReceptorGame},
+    {title:'Two-step Reasoning Quiz', subtitle:'ตอบคำตอบ + เหตุผล เพื่อฝึก reasoning', icon:'🩺', action:startTwoStep},
+    {title:'Mixed Review Challenge', subtitle:'สุ่ม 20 ข้อจากทุกหมวด', icon:'🏆', action:()=>startQuiz('mixed')}
+  );
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className='quiz-card';
+    const btn = document.createElement('button');
+    btn.innerHTML = `<span style="font-size:1.35rem">${item.icon}</span> ${item.title}<br><span class="small">${item.subtitle}</span>`;
+    btn.onclick = item.action;
+    div.appendChild(btn);
+    list.appendChild(div);
+  });
+  renderBadges();
+}
+function cleanCategoryName(cat) {
+  return cat.replace(/^Quiz\s*\d+:\s*/,'');
+}
+function categoryIcon(cat) {
+  if (cat.includes('Big picture')) return '🧭';
+  if (cat.includes('Mechanism')) return '⚙️';
+  if (cat.includes('Antidepressants')) return '💊';
+  if (cat.includes('Mood stabilizers')) return '🧬';
+  if (cat.includes('Clinical')) return '🩺';
+  return '📘';
+}
+function badgeHtml(list, compact=false) {
+  return list.map(b => `<div class="badge">🏅 ${b.name}<span class="desc">${b.desc}</span></div>`).join('');
+}
+function renderBadges() {
+  const home = document.getElementById('badgeShelfHome');
+  const result = document.getElementById('badgeShelfResult');
 
-function startQuiz(category) {
+  if (home) {
+    if (!badges.length) {
+      home.innerHTML = `<div class="badge-compact">🏅 Badge จะแสดงใน session นี้เมื่อทำแบบฝึกหัดผ่านเกณฑ์</div>`;
+    } else {
+      const preview = badges.slice(-3).map(b => b.name).join(' · ');
+      home.innerHTML = `
+        <div class="badge-summary">
+          <div class="badge-count">
+            <span>🏅 Badge ที่ได้รับใน session นี้ <strong>${badges.length}</strong> รายการ</span>
+            <span class="small">${preview}${badges.length > 3 ? ' · …' : ''}</span>
+          </div>
+          <details>
+            <summary>ดูรายการ badge ทั้งหมด</summary>
+            <div class="badge-shelf mini">${badgeHtml(badges)}</div>
+          </details>
+        </div>`;
+    }
+  }
+
+  if (result) {
+    if (!currentResultBadges.length) {
+      result.innerHTML = `<span class="small">ยังไม่ได้รับ badge จากแบบฝึกหัดชุดนี้ ลองทบทวน feedback แล้วทำอีกครั้งได้</span>`;
+    } else {
+      result.innerHTML = `<div class="badge-shelf result-only">${badgeHtml(currentResultBadges)}</div>`;
+    }
+  }
+}
+function awardBadge(name, desc) {
+  if (!currentResultBadges.some(b => b.name === name)) currentResultBadges.push({name, desc});
+  if (!badges.some(b => b.name === name)) badges.push({name, desc});
+  renderBadges();
+}
+
+// Standard quiz
+function startQuiz(category, customQuestions=null) {
+  lastMode = 'quiz';
   currentCategory = category;
-  if (category === '__mixed__') {
+  if (customQuestions) {
+    quizQuestions = customQuestions;
+    currentCategory = 'ทบทวนเฉพาะข้อที่ผิด';
+  } else if (category === 'mixed') {
     quizQuestions = shuffle(QUESTIONS).slice(0, Math.min(20, QUESTIONS.length));
   } else {
     quizQuestions = QUESTIONS.filter(q => q.category === category);
   }
-  quizQuestions = quizQuestions.map(q => {
-    const opts = shuffle(q.options);
-    return {...q, options: opts};
-  });
-  currentIndex = 0;
-  score = 0;
-  history = [];
-  document.getElementById('home').classList.add('hidden');
-  document.getElementById('result').classList.add('hidden');
-  document.getElementById('quiz').classList.remove('hidden');
+  quizQuestions = quizQuestions.map(q => { return {...q, options: shuffle(q.options)}; });
+  currentIndex = 0; score = 0; history = [];
+  showOnly('quiz');
   renderQuestion();
 }
-
 function renderQuestion() {
-  answered = false;
   const q = quizQuestions[currentIndex];
-  document.getElementById('categoryPill').textContent = q.category.replace('Quiz ', 'ชุด ');
-  document.getElementById('difficultyPill').textContent = q.difficulty;
-  document.getElementById('typePill').textContent = q.type === 'multi' ? 'เลือกได้มากกว่า 1 ข้อ' : 'เลือกคำตอบเดียว';
-  document.getElementById('counter').textContent = `ข้อ ${currentIndex + 1} จาก ${quizQuestions.length}`;
-  document.getElementById('progress').style.width = `${(currentIndex) / quizQuestions.length * 100}%`;
-  document.getElementById('question').textContent = q.question;
+  document.getElementById('modeLabel').textContent = currentCategory === 'mixed' ? 'Mixed Review' : cleanCategoryName(currentCategory);
+  document.getElementById('counter').textContent = `ข้อ ${currentIndex+1} จาก ${quizQuestions.length}`;
+  document.getElementById('difficulty').textContent = q.difficulty || '';
+  document.getElementById('progressBar').style.width = `${(currentIndex)/quizQuestions.length*100}%`;
+  document.getElementById('questionText').textContent = q.question;
+  document.getElementById('typeHint').textContent = q.type === 'multi' ? 'เลือกได้มากกว่า 1 ข้อ' : 'เลือกคำตอบเดียว';
   const opts = document.getElementById('options');
   opts.innerHTML = '';
   q.options.forEach((opt, idx) => {
     const id = `opt_${idx}`;
     const label = document.createElement('label');
     label.className = 'option';
-    label.setAttribute('for', id);
-    label.innerHTML = `<input id="${id}" name="answer" type="${q.type === 'multi' ? 'checkbox' : 'radio'}" value="${escapeHtml(opt)}"><span>${opt}</span>`;
+    label.innerHTML = `<input type="${q.type === 'multi' ? 'checkbox':'radio'}" name="answer" value="${escapeHtml(opt)}" id="${id}"> ${opt}`;
     opts.appendChild(label);
   });
-  document.getElementById('feedback').className = 'feedback hidden';
-  document.getElementById('feedback').innerHTML = '';
-  document.getElementById('submitBtn').classList.remove('hidden');
+  document.getElementById('feedback').className='feedback hidden';
+  document.getElementById('feedback').innerHTML='';
+  document.getElementById('submitBtn').disabled=false;
   document.getElementById('nextBtn').classList.add('hidden');
 }
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 }
-
 function selectedAnswers() {
-  return [...document.querySelectorAll('input[name="answer"]:checked')].map(i => i.value);
+  return [...document.querySelectorAll('#options input:checked')].map(i => i.value);
 }
-
 function arraysEqualAsSets(a,b) {
   if (a.length !== b.length) return false;
   const sa = new Set(a);
   return b.every(x => sa.has(x));
 }
-
 function submitAnswer() {
-  if (answered) return;
   const q = quizQuestions[currentIndex];
   const selected = selectedAnswers();
-  if (selected.length === 0) {
-    alert('กรุณาเลือกคำตอบก่อนส่ง');
-    return;
-  }
+  if (selected.length === 0) { alert('กรุณาเลือกคำตอบก่อน'); return; }
   const isCorrect = arraysEqualAsSets(selected, q.answer);
   if (isCorrect) score++;
-  answered = true;
-
-  document.querySelectorAll('.option').forEach(label => {
+  document.querySelectorAll('#options .option').forEach(label => {
     const input = label.querySelector('input');
     const val = input.value;
-    input.disabled = true;
     if (q.answer.includes(val)) label.classList.add('correct');
     else if (selected.includes(val)) label.classList.add('wrong');
+    input.disabled = true;
   });
-
   const fb = document.getElementById('feedback');
-  fb.className = 'feedback ' + (isCorrect ? 'good' : 'bad');
-  fb.innerHTML = `<strong>${isCorrect ? 'ถูกต้อง' : 'ยังไม่ถูก'}</strong><br>${q.feedback}<br><span class="small"><strong>เฉลย:</strong> ${q.answer.join(' / ')}</span>`;
-  fb.classList.remove('hidden');
-
-  history.push({q, selected, isCorrect});
-  document.getElementById('submitBtn').classList.add('hidden');
+  fb.className = `feedback ${isCorrect?'good':'bad'}`;
+  fb.innerHTML = `<strong>${isCorrect?'ถูกต้อง':'ยังไม่ถูก'}</strong><br>
+    <span class="small"><strong>คำตอบของคุณ:</strong> ${selected.join(' / ')}</span><br>
+    <span class="small"><strong>เฉลย:</strong> ${q.answer.join(' / ')}</span><br>
+    ${q.feedback}`;
+  document.getElementById('submitBtn').disabled=true;
   document.getElementById('nextBtn').classList.remove('hidden');
-  document.getElementById('progress').style.width = `${(currentIndex + 1) / quizQuestions.length * 100}%`;
-  if (currentIndex === quizQuestions.length - 1) {
-    document.getElementById('nextBtn').textContent = 'ดูผลสรุป';
-  } else {
-    document.getElementById('nextBtn').textContent = 'ข้อต่อไป';
-  }
+  history.push({q, selected, isCorrect});
+  document.getElementById('progressBar').style.width = `${(currentIndex+1)/quizQuestions.length*100}%`;
 }
-
 function nextQuestion() {
   if (currentIndex < quizQuestions.length - 1) {
     currentIndex++;
     renderQuestion();
+  } else showResult('quiz');
+}
+function showResult(mode) {
+  currentResultBadges = [];
+  showOnly('result');
+  document.getElementById('review').innerHTML = '';
+  let pct=0, txt='', max=0, got=0;
+  if (mode === 'quiz') {
+    max = quizQuestions.length; got = score; pct = Math.round(got/max*100);
+    txt = `คะแนน ${got}/${max} (${pct}%)`;
+    lastWrongQuestions = history.filter(h => !h.isCorrect).map(h => h.q);
+    awardQuizBadges(currentCategory, pct);
+  } else if (mode === 'matching') {
+    max = matchingSet.length; got = matchingSet.filter(x=>x.correct).length; pct = Math.round(got/max*100);
+    txt = `คะแนน ${got}/${max} (${pct}%)`;
+    if (pct >= 80) awardBadge('Drug Class Detective','จับคู่ยา–กลุ่มยาได้ ≥ 80%');
+    if (pct >= 95) awardBadge('Perfect Matcher','จับคู่ยา–กลุ่มยาได้อย่างแม่นยำมาก');
+  } else if (mode === 'receptor') {
+    max = recSet.length; got = recScore; pct = Math.round(got/max*100);
+    txt = `คะแนน ${got}/${max} (${pct}%)`;
+    if (pct >= 90) awardBadge('5-HT Master','แยก 5-HT receptor subtype ได้ ≥ 90%');
+    else if (pct >= 70) awardBadge('Serotonin Starter','แยก 5-HT receptor subtype ได้ ≥ 70%');
+  } else if (mode === 'two') {
+    max = twoSet.length*2; got = twoScore; pct = Math.round(got/max*100);
+    txt = `คะแนน ${got}/${max} (${pct}%)`;
+    if (pct >= 80) awardBadge('Clinical Reasoner','ตอบคำตอบและเหตุผลได้ ≥ 80%');
+    if (pct >= 95) awardBadge('Reasoning Pro','clinical reasoning แม่นยำมาก');
+  }
+  document.getElementById('scoreText').textContent = txt;
+  document.getElementById('advice').textContent = pct >= 85 ? 'ดีมาก สามารถใช้เป็นการทบทวนก่อนสอบได้' : pct >= 70 ? 'ทำได้ดี แนะนำทบทวน feedback ในข้อที่ผิดอีกครั้ง' : 'แนะนำกลับไปทบทวน handout แล้วลองทำซ้ำ โดยเฉพาะข้อที่ผิด';
+  renderBadges();
+}
+function awardQuizBadges(category, pct) {
+  if (!category) return;
+  if (category === 'mixed') {
+    if (pct >= 85) awardBadge('CNS Review Champion','Mixed review ได้ ≥ 85%');
+    if (pct >= 70) awardBadge('Integrated Reviewer','ทบทวนภาพรวมหลายหมวดได้ดี');
+    return;
+  }
+  if (pct >= 70) awardBadge('Review Finisher','ทำแบบฝึกหัดหนึ่งชุดผ่านเกณฑ์ ≥ 70%');
+  if (pct < 80) return;
+  if (category.includes('Big picture')) awardBadge('Big Picture Builder','เชื่อมโรค กลุ่มยา และ neurotransmitters ได้ดี');
+  else if (category.includes('Mechanism')) awardBadge('Mechanism Mapper','เชื่อม target → effect → ADR ได้ดี');
+  else if (category.includes('Antidepressants')) awardBadge('ADR Detective','วิเคราะห์ antidepressants และ ADRs ได้ดี');
+  else if (category.includes('Mood stabilizers')) awardBadge('CNS Safety Navigator','ทบทวน mood stabilizers/anxiolytics/hypnotics ได้ดี');
+  else if (category.includes('Clinical')) awardBadge('Case Connector','ประยุกต์ความรู้กับ clinical cases ได้ดี');
+  if (pct >= 90) awardBadge('High-score Reviewer','ทำแบบฝึกหัดชุดนี้ได้ ≥ 90%');
+}
+function restartLast() {
+  if (lastMode === 'matching') startMatching();
+  else if (lastMode === 'receptor') startReceptorGame();
+  else if (lastMode === 'two') startTwoStep();
+  else startQuiz(currentCategory === 'ทบทวนเฉพาะข้อที่ผิด' ? 'mixed' : currentCategory);
+}
+function reviewWrong() {
+  if (lastMode === 'quiz' && lastWrongQuestions.length) {
+    startQuiz('wrong', lastWrongQuestions);
   } else {
-    showResult();
+    const review = document.getElementById('review');
+    review.innerHTML = '<div class="review-item">โหมดนี้มี feedback แสดงในระหว่างทำแล้ว หรือไม่มีข้อผิดให้ทบทวน</div>';
   }
 }
+function goHome() {
+  showOnly('home');
+  initHome();
+}
 
-function showResult() {
-  document.getElementById('quiz').classList.add('hidden');
-  document.getElementById('result').classList.remove('hidden');
-  const pct = Math.round(score / quizQuestions.length * 100);
-  document.getElementById('scoreText').textContent = `${score} / ${quizQuestions.length} คะแนน (${pct}%)`;
-  let advice = 'ทำได้ดีมาก ใช้ feedback รายข้อเพื่อทบทวนจุดเล็ก ๆ ที่ยังพลาด';
-  if (pct < 60) advice = 'ควรกลับไปทบทวนกลไกพื้นฐานและ receptor/ADR mapping ก่อนทำซ้ำ';
-  else if (pct < 80) advice = 'อยู่ในระดับพอใช้ แนะนำทบทวนข้อที่ผิดและทำซ้ำอีกครั้ง';
-  document.getElementById('scoreAdvice').textContent = advice;
+// Matching
+function startMatching() {
+  lastMode='matching';
+  matchingSet = shuffle(MATCHING_ITEMS).slice(0,12).map(x=>({...x, selected:null, correct:false}));
+  showOnly('matching');
+  const rows = document.getElementById('matchingRows');
+  rows.innerHTML='';
+  matchingSet.forEach((item, i)=> {
+    const row = document.createElement('div');
+    row.className='match-row';
+    row.id=`match_${i}`;
+    row.innerHTML = `<div><strong>${item.drug}</strong></div>
+      <select onchange="matchingSet[${i}].selected=this.value">
+        <option value="">-- เลือกกลุ่มยา --</option>
+        ${MATCHING_GROUPS.map(g=>`<option value="${escapeHtml(g)}">${g}</option>`).join('')}
+      </select>`;
+    rows.appendChild(row);
+  });
+  document.getElementById('matchingFeedback').className='feedback hidden';
+}
+function checkMatching() {
+  let unanswered = matchingSet.some(x=>!x.selected);
+  if (unanswered && !confirm('ยังมีข้อที่ไม่ได้เลือก ต้องการตรวจเลยหรือไม่')) return;
+  matchingSet.forEach((item,i)=> {
+    item.correct = item.selected === item.answer;
+    const row = document.getElementById(`match_${i}`);
+    row.classList.remove('correct','wrong');
+    row.classList.add(item.correct?'correct':'wrong');
+    if (!item.correct) {
+      row.querySelector('div').innerHTML = `<strong>${item.drug}</strong><br><span class="small">เฉลย: ${item.answer}</span>`;
+    }
+  });
+  const got = matchingSet.filter(x=>x.correct).length;
+  const pct = Math.round(got/matchingSet.length*100);
+  const fb = document.getElementById('matchingFeedback');
+  fb.className = `feedback ${pct>=80?'good':'bad'}`;
+  fb.innerHTML = `<strong>ผลลัพธ์: ${got}/${matchingSet.length} (${pct}%)</strong><br>Drug class เป็นพื้นฐานของการเลือกกลไกและ ADR ต่อไป`;
+  showResult('matching');
+}
 
-  const review = document.getElementById('review');
-  review.innerHTML = '';
-  history.forEach((h, i) => {
-    const div = document.createElement('div');
-    div.className = 'review-item ' + (h.isCorrect ? 'good' : 'bad');
-    div.innerHTML = `<strong>ข้อ ${i+1}: ${h.isCorrect ? 'ถูก' : 'ผิด'}</strong><br>
-      <span>${h.q.question}</span><br>
-      <span class="small"><strong>คำตอบของคุณ:</strong> ${h.selected.join(' / ') || '-'}</span><br>
-      <span class="small"><strong>เฉลย:</strong> ${h.q.answer.join(' / ')}</span><br>
-      <span class="small">${h.q.feedback}</span>`;
-    review.appendChild(div);
+// Receptor game
+function startReceptorGame() {
+  lastMode='receptor';
+  recSet = shuffle(RECEPTOR_PROMPTS).slice(0,10);
+  recIndex=0; recScore=0; recHistory=[];
+  showOnly('receptorGame');
+  renderReceptor();
+}
+function renderReceptor() {
+  const q=recSet[recIndex];
+  document.getElementById('recCounter').textContent=`ข้อ ${recIndex+1} จาก ${recSet.length}`;
+  document.getElementById('recProgress').style.width=`${recIndex/recSet.length*100}%`;
+  document.getElementById('recPrompt').textContent=q.prompt;
+  document.getElementById('recHint').classList.add('hidden');
+  document.getElementById('recHint').textContent='Hint: '+q.hint;
+  const c=document.getElementById('recChoices');
+  c.innerHTML='';
+  ['5-HT1A','5-HT2A','5-HT2C','5-HT3'].forEach(r=> {
+    const b=document.createElement('button');
+    b.className='receptor-card';
+    b.textContent=r;
+    b.onclick=()=>submitReceptor(r);
+    c.appendChild(b);
+  });
+  document.getElementById('recFeedback').className='feedback hidden';
+  document.getElementById('recNext').classList.add('hidden');
+}
+function showRecHint() { document.getElementById('recHint').classList.remove('hidden'); }
+function receptorMeaning(r) {
+  return {'5-HT1A':'ใจสงบ / anxiolytic-antidepressant และ autoreceptor adaptation','5-HT2A':'ตื่น กังวล sex เสีย / insomnia, sexual dysfunction','5-HT2C':'คุมกิน เบรก DA/NE / appetite และ activation','5-HT3':'ท้องไส้ / nausea, vomiting, GI upset'}[r];
+}
+function submitReceptor(ans) {
+  const q=recSet[recIndex];
+  const ok=ans===q.answer;
+  if(ok) recScore++;
+  [...document.querySelectorAll('#recChoices button')].forEach(b=> {
+    b.disabled=true;
+    if (b.textContent===q.answer) b.classList.add('good');
+    else if (b.textContent===ans) b.classList.add('bad');
+  });
+  const fb=document.getElementById('recFeedback');
+  fb.className=`feedback ${ok?'good':'bad'}`;
+  fb.innerHTML=`<strong>${ok?'ถูกต้อง':'ยังไม่ถูก'}</strong><br>
+    <strong>เฉลย:</strong> ${q.answer} — ${receptorMeaning(q.answer)}<br>
+    <span class="small">${q.hint}</span>`;
+  recHistory.push({q,ans,ok});
+  document.getElementById('recNext').classList.remove('hidden');
+  document.getElementById('recProgress').style.width=`${(recIndex+1)/recSet.length*100}%`;
+}
+function nextReceptor() {
+  if (recIndex < recSet.length-1) { recIndex++; renderReceptor(); }
+  else showResult('receptor');
+}
+
+// Two-step
+function startTwoStep() {
+  lastMode='two';
+  twoSet = shuffle(TWO_STEP).slice(0,8).map(q=>({...q, options1:shuffle(q.options1), options2:shuffle(q.options2)}));
+  twoIndex=0; twoScore=0; twoHistory=[];
+  showOnly('twoStep');
+  renderTwoStep();
+}
+function renderTwoStep() {
+  const q=twoSet[twoIndex];
+  document.getElementById('twoCounter').textContent=`ข้อ ${twoIndex+1} จาก ${twoSet.length}`;
+  document.getElementById('twoProgress').style.width=`${twoIndex/twoSet.length*100}%`;
+  document.getElementById('twoCase').textContent=q.case;
+  document.getElementById('twoStep1').textContent='Step 1: '+q.step1;
+  document.getElementById('twoStep2').textContent='Step 2: '+q.step2;
+  const o1=document.getElementById('twoOptions1'); o1.innerHTML='';
+  const o2=document.getElementById('twoOptions2'); o2.innerHTML='';
+  q.options1.forEach((opt,i)=> o1.appendChild(makeTwoOption(opt,'two1')));
+  q.options2.forEach((opt,i)=> o2.appendChild(makeTwoOption(opt,'two2')));
+  document.getElementById('twoFeedback').className='feedback hidden';
+  document.getElementById('twoNext').classList.add('hidden');
+}
+function makeTwoOption(opt,name) {
+  const label=document.createElement('label');
+  label.className='option';
+  label.innerHTML=`<input type="radio" name="${name}" value="${escapeHtml(opt)}"> ${opt}`;
+  return label;
+}
+function getRadio(name) {
+  const el=document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+function submitTwoStep() {
+  const q=twoSet[twoIndex];
+  const a1=getRadio('two1'), a2=getRadio('two2');
+  if(!a1 || !a2) { alert('กรุณาตอบทั้ง Step 1 และ Step 2'); return; }
+  const ok1=a1===q.answer1, ok2=a2===q.answer2;
+  twoScore += (ok1?1:0)+(ok2?1:0);
+  markTwoOptions('twoOptions1', q.answer1, a1);
+  markTwoOptions('twoOptions2', q.answer2, a2);
+  const fb=document.getElementById('twoFeedback');
+  fb.className=`feedback ${ok1&&ok2?'good':'bad'}`;
+  fb.innerHTML=`<strong>ได้ ${(ok1?1:0)+(ok2?1:0)}/2 คะแนน</strong><br>
+    Step 1: ${ok1?'ถูก':'ยังไม่ถูก'} · เฉลย: ${q.answer1}<br>
+    Step 2: ${ok2?'ถูก':'ยังไม่ถูก'} · เฉลย: ${q.answer2}<br>
+    <span class="small">${q.feedback}</span>`;
+  twoHistory.push({q,a1,a2,ok1,ok2});
+  document.getElementById('twoNext').classList.remove('hidden');
+  document.getElementById('twoProgress').style.width=`${(twoIndex+1)/twoSet.length*100}%`;
+}
+function markTwoOptions(containerId, correct, selected) {
+  document.querySelectorAll(`#${containerId} .option`).forEach(label=> {
+    const input=label.querySelector('input');
+    input.disabled=true;
+    if(input.value===correct) label.classList.add('correct');
+    else if(input.value===selected) label.classList.add('wrong');
   });
 }
-
-function restartQuiz() {
-  startQuiz(currentCategory);
-}
-
-function goHome() {
-  document.getElementById('quiz').classList.add('hidden');
-  document.getElementById('result').classList.add('hidden');
-  document.getElementById('home').classList.remove('hidden');
+function nextTwoStep() {
+  if(twoIndex<twoSet.length-1) { twoIndex++; renderTwoStep(); }
+  else showResult('two');
 }
 
 initHome();
